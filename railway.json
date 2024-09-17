@@ -1,0 +1,13 @@
+{
+    "build": {
+      "cmd": "npm run build",
+      "output": "build"
+    },
+    "start": {
+      "cmd": "npm run serve -- -l $PORT"
+    },
+    "env": {
+      "PORT": "3000"
+    }
+  }
+  
