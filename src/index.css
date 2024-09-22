@@ -9,12 +9,19 @@
 }
 
 
+.slick-prev:before, .slick-next:before {
+  color: #0077b6 !important; /* Set arrow color */
+  font-size: 20px !important; /* Increase arrow size */
+}
+.slick-next:hover, .slick-prev:hover{
+  border: none!important;
+}
 html, body{
   height: 100%;
-margin: 0px;
-font-family: 'Nunito Sans', sans-serif;
-background: #F8F8F8;
-margin: 0;
+  margin: 0px;
+  font-family: 'Nunito Sans', sans-serif;
+  background: #F8F8F8;
+  margin: 0;
 }
 #app {
  display: flex;
