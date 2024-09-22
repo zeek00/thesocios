@@ -174,7 +174,7 @@ const SignUp = (props) => {
     return (
         <>
 
-            <Header />
+            <Header type="signup" />
 
             <div className={classes.smallDisplay}>
                 <SmallScreens />

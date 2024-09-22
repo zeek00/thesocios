@@ -76,7 +76,7 @@ const Landing = (props) => {
 
                 <h1>Explore ideas and <br/> connect with others </h1>
                 <p>Join us today and enjoy the benefits of an active community</p>
-                <Link className="action-btn">Create an Account</Link>
+                <Link className="action-btn" to='/sign-up'>Create an Account</Link>
                 
 
             </div>

@@ -10,6 +10,7 @@ const Container = styled.nav`
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     justify-content: space-between;
+    background-color: ${({ type }) => type ? '#023e8a' : 'transprent'};
     .logo{
         padding-left: 0.8rem;
         font-family: "Pacifico", cursive;
@@ -32,15 +33,15 @@ const Container = styled.nav`
 `;
 
 const items = [
-    {label:"Home", link: ""}, 
-    {label:"Login", link: ""}, 
-    {label:"Register", link: ""}
+    {label:"Home", link: "/"}, 
+    {label:"Login", link: "/login"}, 
+    {label:"Register", link: "/sign-up"}
 ];
 
 const Header = (props) => {
 
     return(
-        <Container >
+        <Container type={props.type} >
            <h2 className='logo'><span>we</span>Connect.</h2>
 
             <div className="btn-elements">

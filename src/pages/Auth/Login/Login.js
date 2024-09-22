@@ -155,7 +155,7 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <Header />
+            <Header type="login" />
             <div style={bgLeft} className={classes.Login}>
                 <div className="container">
                     <div className="row justify-content-lg-center">
