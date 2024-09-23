@@ -46,7 +46,14 @@ const Container = styled.div`
             }
         }
     }
-    .slider{
+    .sub-section{
+        display: flex;
+        justify-content: center;
+        font-family: "Ubuntu", sans-serif;
+        font-size: 3rem;
+        align-items: center;
+        height: 10rem;
+        background-color: #fff;
         
     }
 
@@ -83,7 +90,10 @@ const Landing = (props) => {
 
             <div className="slider">
                 <Carousel/>
+            </div>
 
+            <div className="sub-section">
+                data goes here !
             </div>
       
        

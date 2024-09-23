@@ -16,6 +16,11 @@
 .slick-next:hover, .slick-prev:hover{
   border: none!important;
 }
+
+.slick-track{
+  /* top: 5rem!important;
+  bottom: 0!important; */
+}
 html, body{
   height: 100%;
   margin: 0px;

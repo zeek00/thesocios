@@ -4,6 +4,8 @@
     width: 100%;
     margin: 0 auto;
     padding: 2rem;
+   
+    overflow-y: visible;
   }
 
  
@@ -18,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: visible;
   }
   
   
@@ -25,11 +28,12 @@
     object-fit: cover;
     border-radius: 1rem;
   }
+
   
   /* Styles for the main content in the center */
   .main .carouselImage {
-    width: 300px;
-    height: 350px;
+    width: 200px;
+    height: 250px;
     object-fit: cover;
     border-radius: 1rem;
     filter: none; /* Main content should not be greyed out */
@@ -55,7 +59,9 @@
   
   .activeImage {
     /* Optional: Specific styles for active image */
+    height: 300px;
 
+    
 
 
   }

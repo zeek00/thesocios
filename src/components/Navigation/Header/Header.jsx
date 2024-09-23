@@ -10,7 +10,7 @@ const Container = styled.nav`
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     justify-content: space-between;
-    background-color: ${({ type }) => type ? '#023e8a' : 'transprent'};
+    background-color: ${({ type }) => type ? 'rgba(2, 62, 138, 0.9)' : 'transprent'};
     .logo{
         padding-left: 0.8rem;
         font-family: "Pacifico", cursive;

@@ -100,7 +100,7 @@
     border-radius: 50%;
 }
 .checkbox input:checked{
-    background-color: #ac0464!important;
+    background-color: #023e8a!important;
 }
 
 .checkbox input:checked::after {
@@ -184,19 +184,19 @@
     }
     
     input:focus{
-        border: 1.5px solid #ac0464;
+        border: 1.5px solid #023e8a;
         outline: none;
         transition: border-color 0.3s ease;
     }
     button:active{
-        background-color: #ac0464;
+        background-color: #023e8a;
         color: #fff;
-        border: 1px solid #ac0464;
+        border: 1px solid #023e8a;
     }
     button:hover{
-        background-color: #ac0464;
+        background-color: #023e8a;
         color: #fff;
-        border: 1px solid #ac0464;
+        border: 1px solid #023e8a;
         transform: scale(1.05);
     }
     .checkbox p{
@@ -214,19 +214,19 @@
     }
     
     input:focus{
-        border: 1.5px solid #ac0464;
+        border: 1.5px solid #023e8a;
         outline: none;
         transition: border-color 0.3s ease;
     }
     button:active{
-        background-color: #ac0464;
+        background-color: #023e8a;
         color: #fff;
-        border: 1px solid #ac0464;
+        border: 1px solid #023e8a;
     }
     button:hover{
-        background-color: #ac0464;
+        background-color: #023e8a;
         color: #fff;
-        border: 1px solid #ac0464;
+        border: 1px solid #023e8a;
         transform: scale(1.05);
     }
 }
