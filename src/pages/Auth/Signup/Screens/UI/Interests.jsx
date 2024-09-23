@@ -6,10 +6,11 @@ const Container = styled.div`
     flex-direction: column;
     gap: 0.8rem;
     margin: 0 0 5px 0;
-    span{
+    button{
+        border-style: none;
         border-radius: 1rem;
         border: 1px solid #ccc;
-        width: 100%;
+        width: fit-content;
         padding: 0.375rem 0.75rem; 
         text-align: center; 
     }
@@ -30,7 +31,7 @@ const Container = styled.div`
             position: relative;
             border-radius: 7px;
             &:checked{
-                background-color: #ac0464!important;
+                background-color: #023e8a!important;
             }
             &:checked::after {
                 content: '✓';
@@ -50,10 +51,10 @@ const Interests = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [selected, setSelected] = useState(null); // State to keep track of selected box
 
-    const handleClick = (index) => {
+    const handleClick = (item) => {
         // Only allow setting the selected box if no box is selected yet
         if (selected === null) {
-            setSelected(index); // Update the selected state
+            setSelected(item); // Update the selected state
         }
       };
 
@@ -67,16 +68,16 @@ const Interests = () => {
             { data: 'Women'},
             { data: 'Everyone'},
             ].map((item, index) => (
-            <span
-                key={index}
-                onClick={() => handleClick(index)} // Pass the index to the click handler
+            <button
+                key={item}
+                onClick={() => handleClick(item)} // Pass the index to the click handler
                 isSelected={selected === index} // Pass whether this box is selected or not
                 isDisabled={selected !== null && selected !== index} // Disable other boxes if one is selected
                 style={{
-                backgroundColor: selected === index ? '#ac0464' : 'transparent',
+                backgroundColor: selected === index ? '#023e8a' : 'transparent',
                 color: selected === index ? '#fff' : '#000'
                 }}
-            >{item.data}</span>
+            >{item.data}</button>
         ))}
       
     </Container>

@@ -32,7 +32,7 @@ const SaveButton = styled.button`
   width: 100%;
   margin: 10px auto;
   padding: 0.5rem 1rem;
-  background-color: #ac0464;
+  background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : '#ccc')};
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -54,11 +54,12 @@ const Span = styled.span`
     border-radius: 0.4rem;
     cursor: pointer;
     color: ${({ isSelected }) => (isSelected ? '#fff' : 'silver')};
-    background-color: ${({ isSelected }) => (isSelected ? '#ac0464' : 'none')};
+    background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : 'none')};
 `;
 
-const Hobbies = ({modalClosed}) => {
+const Hobbies = ({modalClosed, setComplete, selectedValues}) => {
     const [count, setCount] = useState(0);
+    const [done, setDone] = useState(false);
     const [selectedInterests, setSelectedInterests] = useState([]); 
 
     const handleClick = (index) => {
@@ -74,6 +75,8 @@ const Hobbies = ({modalClosed}) => {
 
     const handleSave = () => {
         // Handle the save action here
+        selectedValues.push(selectedInterests);
+        setComplete(!done);
         modalClosed();
         // You can perform further actions like submitting the selected box data
     };

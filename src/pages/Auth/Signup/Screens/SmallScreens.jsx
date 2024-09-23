@@ -4,8 +4,6 @@ import { formOne } from '../data';
 import Birthday from './UI/Birthday';
 import Gender from './UI/Gender';
 import Orientation from './UI/Orientation';
-import Interests from './UI/Interests';
-import LookingFor from './UI/LookingFor';
 import Activities from './UI/Activities';
 import Photos from './UI/Photos/Photos';
 import Input from './UI/Input';
@@ -13,11 +11,13 @@ import {hobbies, interests } from '../../../../components/UI/Form/Interests/data
 
 
 const ProgressTracker = styled.div`
-    background-color: #ac0464;
+    background: linear-gradient(to right, rgba(0, 119, 182, 0.9), rgba(2, 62, 138, 0.9));
     height: 15px;
     width:  ${({ width }) => width}%;
 
 `;
+
+
 
 const Container = styled.div`
     display: flex;
@@ -29,9 +29,13 @@ const Container = styled.div`
     padding-bottom: 1rem; /* Add some padding at the bottom */
 
     .cancel{
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: rgb(114, 117, 128);
+      border-style: none;
+      width: fit-content;
+      background: none;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: rgb(114, 117, 128);
+      outline: none;
     }
     h2{
         font-size: 1.7rem;
@@ -42,7 +46,7 @@ const Container = styled.div`
         padding: 0.4rem;
     }
     input:focus{
-        border: 1.5px solid #ac0464;
+      border: 1.5px solid #023e8a;
     }
     p{
         margin: 0.8rem 0;
@@ -65,15 +69,19 @@ const Button = styled.button`
     width: 100%;
     margin: 10px auto;
     padding: 0.5rem 1rem;
-    background-color: ${({ isComplete, disabled }) =>
-    disabled ? 'rgb(114, 117, 128)' : isComplete ? '#ac0464' : 'rgb(114, 117, 128)'};    color: white;
+    background-color: ${({ isComplete, disabled }) => {
+      if (disabled) return 'rgb(114, 117, 128)';
+      if (isComplete) return '#023e8a';
+      return 'rgb(114, 117, 128)';
+    }};
+    color: white;
     border: none;
     cursor: pointer;
     &:focus{
         outline: none
 `;
 
-const SmallScreens = () => {
+const SmallScreens = ({setData}) => {
     const [step, setStep] = useState(0);
     
     const [formData, setFormData] = useState({
@@ -92,6 +100,7 @@ const SmallScreens = () => {
 
     });
 
+    console.log(formData);
     const formFields = [
         { name: 'firstname', label: formOne.firstname.title, type: 'name', description: formOne.firstname.info },
         { name: 'lastname', label: formOne.lastname.title, type: 'name', description: formOne.lastname.info },
@@ -137,32 +146,43 @@ const SmallScreens = () => {
     };
 
     const handleActivitiesChange = (index, type) => {
-
-        {type === 'interests' &&
+      if (type === 'interests') {
         setFormData((prevFormData) => {
           const isSelected = prevFormData.interests.includes(index);
-          const updatedActivities = isSelected
-            ? prevFormData.interests.filter((i) => i !== index) // Remove if selected
-            : prevFormData.interests.length < 5
-            ? [...prevFormData.interests, index] // Add if less than 5 selected
-            : prevFormData.interests; // No change if already 5 selected
+          let updatedActivities;
+    
+          if (isSelected) {
+            updatedActivities = prevFormData.interests.filter((i) => i !== index);
+          } 
+          else if (prevFormData.interests.length < 5) {
+            updatedActivities = [...prevFormData.interests, index];
+          } 
+          else {
+            updatedActivities = prevFormData.interests;
+          }
     
           return { ...prevFormData, interests: updatedActivities };
-        })};
-
-        {type === 'hobbies' &&
+        });
+      }
+    
+      if (type === 'hobbies') {
         setFormData((prevFormData) => {
           const isSelected = prevFormData.hobbies.includes(index);
-          const updatedActivities = isSelected
-            ? prevFormData.hobbies.filter((i) => i !== index) // Remove if selected
-            : prevFormData.hobbies.length < 5
-            ? [...prevFormData.hobbies, index] // Add if less than 5 selected
-            : prevFormData.hobbies; // No change if already 5 selected
+          let updatedActivities;
+    
+          if (isSelected) {
+            updatedActivities = prevFormData.hobbies.filter((i) => i !== index);
+          } else if (prevFormData.hobbies.length < 5) {
+            updatedActivities = [...prevFormData.hobbies, index];
+          } else {
+            updatedActivities = prevFormData.hobbies;
+          }
     
           return { ...prevFormData, hobbies: updatedActivities };
-        })};
-      
-      };
+        });
+      }
+    };
+    
     
 
     const handleNext = () => {
@@ -194,9 +214,9 @@ const SmallScreens = () => {
            
         <ProgressTracker width={progressPercentage}  />
         <Container>
-            <span className='cancel' onClick={step > 0 ? handlePrevious : null}>
+            <button className='cancel' onClick={step > 0 ? handlePrevious : null}>
             {step > 0 ? '<' : 'X'}
-            </span>
+            </button>
             <ContentWrapper>
                 <div>
                     <h2 htmlFor={currentField.name}>{currentField.label}</h2>
