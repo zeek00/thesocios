@@ -18,7 +18,7 @@ const Container = styled.nav`
         font-style: normal;
         color: #fff;
         span{
-            color: #0077b6;
+            color: ${({ type }) => type ? '#fff' : '#0077b6'};
 
         }
     }
@@ -42,7 +42,7 @@ const Header = (props) => {
 
     return(
         <Container type={props.type} >
-           <h2 className='logo'><span>we</span>Connect.</h2>
+           <h2 className='logo'><span>we</span>Connect <span>.</span></h2>
 
             <div className="btn-elements">
               {items.map((data, index)=><Btn label={data.label} link={data.link} index={index} />)}

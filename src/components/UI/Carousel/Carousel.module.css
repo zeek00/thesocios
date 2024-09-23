@@ -49,8 +49,8 @@
   
   /* Styles for the greyed-out side boxes */
   .side .carouselImage {
-    width: 200px;
-    height: 250px;
+    width: 190px;
+    height: 220px;
     object-fit: cover;
     filter: grayscale(100%); /* Greyscale effect for side boxes */
     opacity: 0.5;

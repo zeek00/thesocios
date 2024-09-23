@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Carousel from '../components/UI/Carousel/Carousel';
 
 const Container = styled.div`
-    background: linear-gradient(to bottom, rgba(1, 119, 182, 0.4), rgba(255, 255, 255, 1));
+    background: linear-gradient(to bottom, rgba(1, 119, 182, 0.35), rgba(255, 255, 255, 1));
     .header{
         position: static;
     }
