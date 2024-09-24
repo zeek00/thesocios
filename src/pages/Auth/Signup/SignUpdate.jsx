@@ -13,9 +13,9 @@ import { SERVER_REQUEST } from '../../../shared/Backend';
 import { PaystackButton } from 'react-paystack';
 import { toast } from 'react-toastify';
 import {dataOne, dataTwo} from './data'
-import Fields from '../../../components/UI/Form/Fields';
-import SmallScreens from './SmallScreens/SmallScreens';
+import SmallScreens from './Screens/SmallScreens';
 import Header from '../../../components/Navigation/Header/Header';
+import LargeScreens from './Screens/LargeScreens';
 
 
 const SignUp = (props) => {
@@ -31,6 +31,7 @@ const SignUp = (props) => {
         userRegId: state.auth.userRegId,
         registerSuccess: state.auth.registerSuccess
     }));
+    const [authData, setAuthData] = useState([]);
 
     const [formOne, setFormOne] = useState(dataOne);
 
@@ -177,40 +178,12 @@ const SignUp = (props) => {
             <Header type="signup" />
 
             <div className={classes.smallDisplay}>
-                <SmallScreens />
-                
-
+                <SmallScreens setData={setAuthData} />
             </div>
 
 
             <div className={classes.largeDisplay}>
-                <h1 className={classes.h1}>Create account</h1>
-                <div className={classes.container}>
-                    <div className={classes.topHalf}>   
-                        <div className={classes.formContent}>
-                            <Fields type={'name'} label='First name' />
-                            <Fields type={'name'} label={'Last name'}/>
-                            <Fields type={'name'} label={'Username'}/>
-                            <Fields type={'email'} label='Email' />
-                            <Fields type={'phone'} label='Phone number' />
-                            <Fields type={'password'} label='Password'/>
-                            <Fields label={'Date of Birth'} />
-                            <Fields label={'Gender'} />
-                            <Fields label={'Interested in'}/>
-                            <Fields label={'Looking for'}/>
-                            <Fields label={'Interests'} />
-                            <Fields label={'Hobbies'} />
-                        </div>
-
-                        <div className={classes.imageContent}>
-                            <Fields label={'Profile Photos'}/>
-
-                        </div>
-                    </div>
-
-            
-                </div>
-
+                <LargeScreens setData={setAuthData} />
             </div>
            
 

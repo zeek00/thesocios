@@ -7,10 +7,12 @@ const Container = styled.div`
   gap: 0.8rem;
   margin: 0 0 5px 0;
 
-  span {
+  button {
+    all: unset;
     border-radius: 1rem;
     border: 1px solid #ccc;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
     padding: 0.375rem 0.75rem;
     text-align: center;
     cursor: pointer;
@@ -33,9 +35,8 @@ const Container = styled.div`
       color: #fff;
       position: relative;
       border-radius: 7px;
-
       &:checked {
-        background-color: #ac0464 !important;
+        background-color: #023e8a!important;
       }
 
       &:checked::after {
@@ -65,16 +66,16 @@ const Gender = ({ selectedGender, showGender, onGenderChange, onShowGenderChange
   return (
     <Container>
       {genderOptions.map((gender, index) => (
-        <span
+        <button
           key={index}
           onClick={() => handleGenderSelect(index)}
           style={{
-            backgroundColor: selectedGender === gender ? '#ac0464' : 'transparent',
+            backgroundColor: selectedGender === gender ? '#023e8a' : 'transparent',
             color: selectedGender === gender ? '#fff' : '#000',
           }}
         >
           {gender}
-        </span>
+        </button>
       ))}
 
       <div>

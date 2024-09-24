@@ -14,19 +14,19 @@ const Items = styled.div`
   gap: 10px;
 `;
 
-const Span = styled.span`
+const Button = styled.button`
   width: fit-content;
   border: 1px solid silver;
   padding: 0.2rem;
   border-radius: 0.4rem;
   color: ${({ isSelected }) => (isSelected ? '#fff' : 'silver')};
-  background-color: ${({ isSelected }) => (isSelected ? '#ac0464' : 'transparent')};
+  background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : 'transparent')};
   cursor: pointer;
 `;
 
 const Activities = ({ activitiesData, selectedActivities, onSelectActivity, type }) => {
-  const handleClick = (index) => {
-    onSelectActivity(index, type); // Call parent function to manage selection
+  const handleClick = (item) => {
+    onSelectActivity(item, type); // Call parent function to manage selection
   };
 
 
@@ -34,14 +34,14 @@ const Activities = ({ activitiesData, selectedActivities, onSelectActivity, type
     <Container>
       <Items>
         {activitiesData.map((item, index) => (
-          <Span
-            key={index}
-            onClick={() => handleClick(index)}
+          <Button
+            key={item}
+            onClick={() => handleClick(item)}
             isSelected={selectedActivities.includes(index)}
             isDisabled={selectedActivities.length >= 4 && !selectedActivities.includes(index)}
           >
             {item.data}
-          </Span>
+          </Button>
         ))}
       </Items>
     </Container>
