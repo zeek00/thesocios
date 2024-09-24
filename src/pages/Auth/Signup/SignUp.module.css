@@ -36,7 +36,6 @@
     }
 
     .formContent{
-        width: 60%;
         border-right: 1px solid rgb(114, 117, 128);
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* 3 equal columns */
@@ -47,7 +46,7 @@
     }
     
     .imageContent{
-        width: 35%;
+        width: 40%;
         display: flex;
         justify-content: center;
         padding: 1rem;
