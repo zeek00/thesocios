@@ -24,10 +24,16 @@ const Container = styled.div`
             font-family: "Ubuntu", sans-serif;
             text-align: center;
             font-size: 3rem;
+            @media only screen and (max-width: 576px) {
+                /* Styles for small mobile screens */
+                font-size: 1.5rem;
+            }
+            
 
         }
         p{
             font-size: 0.8rem;
+            text-align: center;
             color: rgba(0,0,0,0.6);
 
         }
@@ -37,6 +43,11 @@ const Container = styled.div`
             padding: .375rem .75rem;
             border-radius: 0.25rem;
             text-transform: none;
+            @media only screen and (max-width: 576px) {
+                /* Styles for small mobile screens */
+                padding: .275rem .65rem;
+                font-size: 0.8rem;
+            }
             &:hover{
                 text-decoration: none;
                 transition: 0.4s ease-in;
@@ -54,6 +65,10 @@ const Container = styled.div`
         align-items: center;
         height: 10rem;
         background-color: #fff;
+        @media only screen and (max-width: 576px) {
+            /* Styles for small mobile screens */
+            font-size: 1.5rem;
+        }
         
     }
 
