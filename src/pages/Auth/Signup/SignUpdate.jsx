@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import {dataOne, dataTwo} from './data'
 import Fields from '../../../components/UI/Form/Fields';
 import SmallScreens from './SmallScreens/SmallScreens';
+import Header from '../../../components/Navigation/Header/Header';
 
 
 const SignUp = (props) => {
@@ -172,6 +173,8 @@ const SignUp = (props) => {
 
     return (
         <>
+
+            <Header type="signup" />
 
             <div className={classes.smallDisplay}>
                 <SmallScreens />

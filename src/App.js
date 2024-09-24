@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout'
 import { Route, Switch , withRouter, Redirect} from 'react-router-dom';
-import Landing from './pages/Landing';
 import Login from './pages/Auth/Login/Login'
 import SignUp from './pages/Auth/Signup/SignUp'
 import SignUpdate from './pages/Auth/Signup/SignUpdate.jsx'
@@ -11,6 +10,10 @@ import {connect} from 'react-redux';
 import * as actions from "./store/actions";
 import VerifyPayments from './pages/Account/Dashboard/VerifyPayments';
 import EscortDetails from './pages/Account/Escort/EscortDetails';
+import Landing from './pages/Landing.jsx';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 
 
 const routes = [
@@ -69,7 +72,7 @@ class App extends Component {
     } else {
       
       return (
-        <Layout>
+        <>
           <Switch>
             {routes.map((route, i) =>
               route.guarded ? (
@@ -87,7 +90,7 @@ class App extends Component {
               }}
             ></Redirect>
           </Switch>
-        </Layout>
+        </>
       );
     }
   }

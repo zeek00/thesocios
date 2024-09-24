@@ -12,7 +12,7 @@ import Hobbies from './Interests/Hobbies';
 const PassStyle = styled.div`
 
     position: relative;
-    border: ${({ click }) => (click ? '1.5px solid #ac0464' : '1px solid rgb(114, 117, 128)')};
+    border: ${({ click }) => (click ? '1.5px solid #023e8a' : '1px solid rgb(114, 117, 128)')};
     display: flex;
     justify-content: space-between;
     
