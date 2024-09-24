@@ -15,11 +15,19 @@ const PassStyle = styled.div`
     input{
         border: none;
         width: 100%;
+       
     }
-    span{
+
+    button{
         position: absolute;
         right: 0;
         padding-right: 0.4rem;
+        border-style: none;
+        width: fit-content;
+        background: none;
+        &:hover{
+            color: #fff;
+        }
         
 
     }
@@ -63,19 +71,19 @@ const Input = ({id, name, type, onChange, value}) => {
             id === 'password' && (
                 <PassStyle click={passClick} >
 
-                            <input
-                                type={passwordVisible ? 'text' : type}
-                                placeholder={'Password'}
-                                id={id}
-                                name={name}
-                                value={value}
-                                onChange={onChange}
-                                required
-                            />
-                            <span onClick={togglePasswordVisibility}>
-                                {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Conditionally render eye icons */}
-                            </span>
-                        </PassStyle>
+                    <input
+                        type={passwordVisible ? 'text' : type}
+                        placeholder={'Password'}
+                        id={id}
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        required
+                    />
+                    <button onClick={togglePasswordVisibility}>
+                        {passwordVisible ? <FaEyeSlash style={{color: '#023e8a'}} /> : <FaEye />} {/* Conditionally render eye icons */}
+                    </button>
+                </PassStyle>
             
         )
         }

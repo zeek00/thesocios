@@ -89,13 +89,13 @@ li.nav-item {
 
 .navbar-nav .nav-item .active {
   background: #fff;
-  color: #ac0464;
+  color: #023e8a;
 }
 }
 
 .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-  color: #ac0464;
-  border-bottom: 2px solid #ac0464;
+  color: #023e8a;
+  border-bottom: 2px solid #023e8a;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -106,9 +106,9 @@ li.nav-item {
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-  color: #ac0464;
+  color: #023e8a;
   background-color: transparent;
-  border-bottom: 2px solid #ac0464 !important;
+  border-bottom: 2px solid #023e8a !important;
   border-color: transparent;
 }
 .nav-tabs .nav-item {
@@ -184,7 +184,7 @@ li.nav-item {
   display: block;
 }
 .block-syl1 i {
-  background: #ac0464;
+  background: #023e8a;
 }
 
 

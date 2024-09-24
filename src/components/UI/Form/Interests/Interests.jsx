@@ -32,7 +32,7 @@ const SaveButton = styled.button`
   width: 100%;
   margin: 10px auto;
   padding: 0.5rem 1rem;
-  background-color: #ac0464;
+  background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : '#ccc')};
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -54,28 +54,31 @@ const Span = styled.span`
     border-radius: 0.4rem;
     cursor: pointer;
     color: ${({ isSelected }) => (isSelected ? '#fff' : 'silver')};
-    background-color: ${({ isSelected }) => (isSelected ? '#ac0464' : 'none')};
+    background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : 'none')};
 
 
 `;
 
-const Interests = ({modalClosed}) => {
+const Interests = ({modalClosed, setComplete, selectedValues}) => {
     const [count, setCount] = useState(0);
+    const [done, setDone] = useState(false);
     const [selectedInterests, setSelectedInterests] = useState([]); 
 
-    const handleClick = (index) => {
-        if (selectedInterests.includes(index)) {
+    const handleClick = (item) => {
+        if (selectedInterests.includes(item.data)) {
           // Deselect if already selected
-          setSelectedInterests(selectedInterests.filter((i) => i !== index));
+          setSelectedInterests(selectedInterests.filter((i) => i !== item.data));
         } else if (selectedInterests.length < 5) {
           // Only allow adding if less than 5 are selected
           setCount(count+1)
-          setSelectedInterests([...selectedInterests, index]);
+          setSelectedInterests([...selectedInterests, item.data]);
         }
     };
 
     const handleSave = () => {
         // Handle the save action here
+        selectedValues.push(selectedInterests);
+        setComplete(!done);
         modalClosed();
         // You can perform further actions like submitting the selected box data
     };
@@ -90,9 +93,9 @@ const Interests = ({modalClosed}) => {
             (
                 <Span 
                 key={index}
-                onClick={() => handleClick(index)}
-                isSelected={selectedInterests.includes(index)}
-                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(index)}
+                onClick={() => handleClick(item)}
+                isSelected={selectedInterests.includes(item.data)}
+                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(item)}
                 >{item.data}</Span>
             )
         )}
