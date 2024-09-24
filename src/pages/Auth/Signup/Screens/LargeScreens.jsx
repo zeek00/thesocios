@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import classes from '../SignUp.module.css';
 import Fields from '../../../../components/UI/Form/Fields';
+import styled from 'styled-components';
+
+const ValidateBox = styled.div`
+  .help{
+    font-size: 0.6rem;
+    color: red;
+  }
+`;
+
+
 
 const LargeScreens = ({ setData }) => {
     const [formData, setFormData] = useState({
@@ -34,21 +44,21 @@ const LargeScreens = ({ setData }) => {
         let errors = { ...formErrors };
 
         // Simple regex patterns for validation
-        const namePattern = /^[a-zA-Z]+$/; // Only allows letters
+        const namePattern = /^[A-Za-z]{3,}$/; // Only allows letters
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
         const usernamePattern = /^[a-zA-Z0-9_]{3,}$/; // Alphanumeric with underscores, at least 3 characters
         const passwordPattern = /^.{6,}$/; // At least 6 characters
-
+        const phonePattern = /^\d{7,15}$/; // Allows between 7 and 15 digits
         // Validation rules for each field
         switch (name) {
-            case 'firstName':
-                errors.firstName = namePattern.test(value) ? '' : 'First name must contain only letters';
+            case 'firstname':
+                errors.firstname = namePattern.test(value) ? '' : 'First name must be at least 3 characters and contain only letters';
                 break;
-            case 'lastName':
-                errors.lastName = namePattern.test(value) ? '' : 'Last name must contain only letters';
+            case 'lastname':
+                errors.lastname = namePattern.test(value) ? '' : 'Last name must be at least 3 characters and contain only letters';
                 break;
             case 'email':
-                errors.email = emailPattern.test(value) ? '' : 'Invalid email format';
+                errors.email = emailPattern.test(value) ? '' : `Invalid email format example 'something@gmail.com'`;
                 break;
             case 'username':
                 errors.username = usernamePattern.test(value) ? '' : 'Username must be at least 3 characters long and can only contain letters, numbers, or underscores';
@@ -56,6 +66,9 @@ const LargeScreens = ({ setData }) => {
             case 'password':
                 errors.password = passwordPattern.test(value) ? '' : 'Password must be at least 6 characters long';
                 break;
+            case 'phone':
+              errors.phone = phonePattern.test(value) ? '' : 'Phone allows between 7 and 15 digits including country code';
+              break;
             default:
                 break;
         }
@@ -88,7 +101,6 @@ const LargeScreens = ({ setData }) => {
         setData(formData); // Pass data to the parent component (if needed)
     };
 
-  console.log(formData);
 
   return (
     <>
@@ -96,13 +108,18 @@ const LargeScreens = ({ setData }) => {
       <div className={classes.container}>
         <div className={classes.topHalf}>
           <div className={classes.formContent}>
-            <Fields 
-              type="text" 
-              label="First name" 
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange} 
-            />
+            <ValidateBox>
+              <Fields 
+                type="text" 
+                label="First name" 
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange} 
+              />
+              {formErrors.firstname && <p className="help">{formErrors.firstname}</p>}
+            </ValidateBox>
+            
+          <ValidateBox>            
             <Fields 
               type="text" 
               label="Last name" 
@@ -110,6 +127,9 @@ const LargeScreens = ({ setData }) => {
               value={formData.lastname}
               onChange={handleChange}
             />
+              {formErrors.lastname && <p className="help">{formErrors.lastname}</p>}
+          </ValidateBox>
+          <ValidateBox>
             <Fields 
               type="text" 
               label="Username" 
@@ -117,6 +137,9 @@ const LargeScreens = ({ setData }) => {
               value={formData.username}
               onChange={handleChange}
             />
+              {formErrors.username && <p className="help">{formErrors.username}</p>}
+          </ValidateBox>
+          <ValidateBox>
             <Fields 
               type="email" 
               label="Email" 
@@ -124,6 +147,9 @@ const LargeScreens = ({ setData }) => {
               value={formData.email}
               onChange={handleChange}
             />
+              {formErrors.email && <p className="help">{formErrors.email}</p>}
+            </ValidateBox>
+          <ValidateBox>
             <Fields 
               type="phone" 
               label="Phone number" 
@@ -131,6 +157,9 @@ const LargeScreens = ({ setData }) => {
               value={formData.phone}
               onChange={handleChange}
             />
+              {formErrors.phone && <p className="help">{formErrors.phone}</p>}
+            </ValidateBox>
+          <ValidateBox>
             <Fields 
               type="password" 
               label="Password" 
@@ -138,7 +167,9 @@ const LargeScreens = ({ setData }) => {
               value={formData.password}
               onChange={handleChange}
             />
+            </ValidateBox>
             {/* For Birthday, you could break it down into separate fields */}
+            <ValidateBox>
             <Fields 
                 type="birthday"
                 label={'Date of Birth'}
@@ -146,7 +177,8 @@ const LargeScreens = ({ setData }) => {
                 value={formData.birthday}
                 onChange={handleBirthdayChange}
              />
-
+             </ValidateBox>
+          <ValidateBox>            
             <Fields 
               type="text" 
               label="Gender" 
@@ -156,11 +188,14 @@ const LargeScreens = ({ setData }) => {
               showGender={formData.showGender}
               onShowGenderChange={handleShowGenderChange}
             />
+            </ValidateBox>
             {/* Add functionality for Interests and Hobbies */}
+
             <Fields 
                 label={'Interests'} 
                 value={formData.interests}
             />
+
             <Fields 
                 label={'Hobbies'}
                 value={formData.hobbies} 
