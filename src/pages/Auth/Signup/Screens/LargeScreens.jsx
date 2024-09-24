@@ -18,6 +18,8 @@ const LargeScreens = ({ setData }) => {
         photos: ''
     });
 
+    const [formErrors, setFormErrors] = useState({});
+
     // Handle form field changes
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,7 +27,43 @@ const LargeScreens = ({ setData }) => {
             ...prevFormData,
             [name]: value // Update other fields directly
         }));
+        validateField(name, value);
     }
+
+    const validateField = (name, value) => {
+        let errors = { ...formErrors };
+
+        // Simple regex patterns for validation
+        const namePattern = /^[a-zA-Z]+$/; // Only allows letters
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+        const usernamePattern = /^[a-zA-Z0-9_]{3,}$/; // Alphanumeric with underscores, at least 3 characters
+        const passwordPattern = /^.{6,}$/; // At least 6 characters
+
+        // Validation rules for each field
+        switch (name) {
+            case 'firstName':
+                errors.firstName = namePattern.test(value) ? '' : 'First name must contain only letters';
+                break;
+            case 'lastName':
+                errors.lastName = namePattern.test(value) ? '' : 'Last name must contain only letters';
+                break;
+            case 'email':
+                errors.email = emailPattern.test(value) ? '' : 'Invalid email format';
+                break;
+            case 'username':
+                errors.username = usernamePattern.test(value) ? '' : 'Username must be at least 3 characters long and can only contain letters, numbers, or underscores';
+                break;
+            case 'password':
+                errors.password = passwordPattern.test(value) ? '' : 'Password must be at least 6 characters long';
+                break;
+            default:
+                break;
+        }
+
+        // Update formErrors state
+        setFormErrors(errors);
+    };
+
 
     const handleBirthdayChange = (field, value) => {
         setFormData({

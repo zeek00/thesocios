@@ -3,7 +3,7 @@
 .btnFull{
     width: 100%;
     padding: 11px 11px;
-    background: #ac0464;
+    background: #0077b6;
     color: #fff;
     text-transform: capitalize;
     font-weight: 900;
@@ -12,7 +12,7 @@
 }
 .btnPrev{
     background: #fff;
-    border: 3px solid #ac0464;
+    border: 3px solid #0077b6;
     margin: 0 11px 0 0;
     width: 100%;
     padding: 11px 11px;
@@ -35,7 +35,7 @@
 .tripSearch{
     width: 100%;
     padding: 8px 0 6px 0;
-    background: #ac0464;
+    background: #0077b6;
     color: #fff;
     font-weight: 700;
     border: none;
@@ -76,7 +76,7 @@
     width: 100%;
     padding: 8px 0 6px 0;
     /* background: #2391d5; */
-    color: #ac0464;
+    color: #0077b6;
     font-weight: 700;
     border: 2px solid #2391d5;
     border-style: dashed;

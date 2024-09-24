@@ -49,8 +49,8 @@
   
   /* Styles for the greyed-out side boxes */
   .side .carouselImage {
-    width: 200px;
-    height: 250px;
+    width: 190px;
+    height: 220px;
     object-fit: cover;
     filter: grayscale(100%); /* Greyscale effect for side boxes */
     opacity: 0.5;
@@ -70,3 +70,20 @@
     /* Optional: Specific styles for inactive (side) images */
   }
   
+  @media only screen and (max-width: 576px) {
+    /* Styles for small mobile screens */
+    .main .carouselImage {
+      width: 150px;
+      height: 160px;
+      
+    }
+    .side .carouselImage {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      filter: grayscale(100%); /* Greyscale effect for side boxes */
+      opacity: 0.5;
+      transform: scale(1);
+    }
+
+}

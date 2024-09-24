@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import classes from './Login.module.css';
-import { LoginBg } from '../../../config/Config';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import { checkValidity } from '../../../shared/Method';
@@ -11,7 +10,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import Header from '../../../components/Navigation/Header/Header';
 
 const bgLeft = {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.28)), url(${LoginBg})`,
+    backgroundImage: '#fff',
     backgroundPosition: 'center',
     backgroundSize: 'cover'
 };
@@ -162,8 +161,7 @@ const Login = () => {
                         <div className="col-md-5">
                             <div className={classes.formArea}>
                                 <div className={classes.formHeader}>
-                                    <h3>Login</h3>
-                                    <p>Welcome back!</p>
+                                    <h2>Welcome back!</h2>
                                 </div>
                                 <div style={{ width: '100%', position: 'relative' }}>
                                     {form}

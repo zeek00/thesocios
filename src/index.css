@@ -17,6 +17,13 @@
   border: none!important;
 }
 
+@media only screen and (max-width: 576px) {
+  .slick-prev:before, .slick-next:before {
+    font-size: 15px!important;
+
+  }
+}
+
 .slick-track{
   /* top: 5rem!important;
   bottom: 0!important; */

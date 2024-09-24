@@ -25,12 +25,34 @@ const Carousel = () => {
         beforeChange: (current, next) => setActiveIndex(next), // Update the active slide index
         responsive: [
           {
+            breakpoint: 1440, // Adjust this for larger tablets and smaller desktop screens
+            settings: {
+              slidesToShow: 5, // Show 3 slides on larger tablets
+              centerPadding: '18rem' // Adjust center padding for spacing
+            }
+          },
+          {
+            breakpoint: 1024, // Adjust this for larger tablets and smaller desktop screens
+            settings: {
+              slidesToShow: 3, // Show 3 slides on larger tablets
+              centerPadding: '2rem' // Adjust center padding for spacing
+            }
+          },
+          {
             breakpoint: 768,
+            settings: {
+              slidesToShow: 3,
+              centerPadding: '20px'
+            }
+          },
+          {
+            breakpoint: 500,
             settings: {
               slidesToShow: 1,
               centerPadding: '20px'
             }
           }
+          
         ]
     };
 
