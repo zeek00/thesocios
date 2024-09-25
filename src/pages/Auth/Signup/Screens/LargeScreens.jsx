@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classes from '../SignUp.module.css';
 import Fields from '../../../../components/UI/Form/Fields';
 import styled from 'styled-components';
+import config from '../../../../config/Config';
 
 const ValidateBox = styled.div`
   .help{
@@ -97,8 +98,30 @@ const LargeScreens = ({ setData }) => {
     };
 
     // Optional: Submit data to parent
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setData(formData); // Pass data to the parent component (if needed)
+      
+        
+        console.log("data ==", JSON.stringify(formData))
+        try {
+            const response = await fetch('http://localhost:5050/createUser', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                  'Content-Type': 'application/json',
+              },
+              
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to submit form data');
+            }
+    
+            const result = await response.json(); // Parse the response
+            console.log('Form submitted successfully:', result);
+        } catch (error) {
+            console.error('Error submitting the form:', error);
+        }
     };
 
 
@@ -210,6 +233,13 @@ const LargeScreens = ({ setData }) => {
               onChange={(e) => setFormData({ ...formData, photos: e.target.files[0] })}
             />
           </div>
+        
+        <div  className={classes.submitButton}> 
+          <button type="submit" onClick={handleSubmit}>Submit</button>
+        </div>
+            
+          
+          
         </div>
       </div>
     </>
