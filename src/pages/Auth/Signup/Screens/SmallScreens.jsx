@@ -100,7 +100,6 @@ const SmallScreens = ({setData}) => {
 
     });
 
-    console.log(formData);
     const formFields = [
         { name: 'firstname', label: formOne.firstname.title, type: 'name', description: formOne.firstname.info },
         { name: 'lastname', label: formOne.lastname.title, type: 'name', description: formOne.lastname.info },
