@@ -25,9 +25,11 @@
 }
 
 .input{    
-    text-transform: capitalize;
     border-color: rgb(114, 117, 128)
 
+}
+input[type="text"] {
+    text-transform: capitalize;
 }
 
 .birthdayContainer{

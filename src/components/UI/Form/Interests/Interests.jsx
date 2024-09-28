@@ -77,7 +77,7 @@ const Interests = ({modalClosed, setComplete, selectedValues}) => {
 
     const handleSave = () => {
         // Handle the save action here
-        selectedValues.push(selectedInterests);
+        selectedValues.push(...selectedInterests);
         setComplete(!done);
         modalClosed();
         // You can perform further actions like submitting the selected box data
@@ -95,7 +95,7 @@ const Interests = ({modalClosed, setComplete, selectedValues}) => {
                 key={index}
                 onClick={() => handleClick(item)}
                 isSelected={selectedInterests.includes(item.data)}
-                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(item)}
+                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(index)}
                 >{item.data}</Span>
             )
         )}

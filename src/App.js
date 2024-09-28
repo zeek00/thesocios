@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout'
 import { Route, Switch , withRouter, Redirect} from 'react-router-dom';
-import SignUp from './pages/Signup/SignUp.js'
+import SignUp from './pages/Signup/SignUp'
 import SignUpdate from './pages/Signup/SignUpdate.jsx'
 import Dashboard from './pages/Account/Dashboard/Dashboard'
 import {Loading, RouteGuard} from './router'
