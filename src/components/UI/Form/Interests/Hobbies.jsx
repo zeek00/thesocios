@@ -58,24 +58,26 @@ const Span = styled.span`
 `;
 
 const Hobbies = ({modalClosed, setComplete, selectedValues}) => {
+
     const [count, setCount] = useState(0);
     const [done, setDone] = useState(false);
     const [selectedInterests, setSelectedInterests] = useState([]); 
 
-    const handleClick = (index) => {
-        if (selectedInterests.includes(index)) {
+    const handleClick = (item) => {
+        if (selectedInterests.includes(item.data)) {
           // Deselect if already selected
-          setSelectedInterests(selectedInterests.filter((i) => i !== index));
+          setSelectedInterests(selectedInterests.filter((i) => i !== item.data));
         } else if (selectedInterests.length < 5) {
           // Only allow adding if less than 5 are selected
           setCount(count+1)
-          setSelectedInterests([...selectedInterests, index]);
+          setSelectedInterests([...selectedInterests, item.data]);
         }
     };
 
+
     const handleSave = () => {
         // Handle the save action here
-        selectedValues.push(selectedInterests);
+        selectedValues.push(...selectedInterests);
         setComplete(!done);
         modalClosed();
         // You can perform further actions like submitting the selected box data
@@ -91,9 +93,9 @@ const Hobbies = ({modalClosed, setComplete, selectedValues}) => {
             (
                 <Span 
                 key={index}
-                onClick={() => handleClick(index)}
-                isSelected={selectedInterests.includes(index)}
-                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(index)}
+                onClick={() => handleClick(item)}
+                isSelected={selectedInterests.includes(item.data)}
+                isDisabled={selectedInterests.length === 5 && !selectedInterests.includes(index)}
                 >{item.data}</Span>
             )
         )}

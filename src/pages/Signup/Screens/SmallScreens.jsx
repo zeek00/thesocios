@@ -7,7 +7,7 @@ import Orientation from './UI/Orientation';
 import Activities from './UI/Activities';
 import Photos from './UI/Photos/Photos';
 import Input from './UI/Input';
-import {hobbies, interests } from '../../../../components/UI/Form/Interests/data';
+import {hobbies, interests } from '../../../components/UI/Form/Interests/data';
 
 
 const ProgressTracker = styled.div`

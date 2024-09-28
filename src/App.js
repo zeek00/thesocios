@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout'
 import { Route, Switch , withRouter, Redirect} from 'react-router-dom';
-import SignUp from './pages/Auth/Signup/SignUp'
-import SignUpdate from './pages/Auth/Signup/SignUpdate.jsx'
+import SignUp from './pages/Signup/SignUp'
+import SignUpdate from './pages/Signup/SignUpdate.jsx'
 import Dashboard from './pages/Account/Dashboard/Dashboard'
 import {Loading, RouteGuard} from './router'
 import {connect} from 'react-redux';
@@ -12,7 +12,7 @@ import EscortDetails from './pages/Account/Escort/EscortDetails';
 import Landing from './pages/Landing.jsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Login from './pages/Auth/Login/Login.jsx';
+import Login from './pages/Login/Login.jsx';
 
 
 
