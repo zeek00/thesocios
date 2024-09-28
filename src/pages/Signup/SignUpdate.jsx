@@ -98,7 +98,7 @@ const SignUp = (props) => {
             {/* Large Screen View */}
             <div className={classes.largeDisplay}>
                 <LargeScreens setData={setUserData} />
-                <Button btnType="btnFull" clicked={signUpHandler}>Submit</Button>
+                {/* <Button btnType="btnFull" clicked={signUpHandler}>Submit</Button> */}
             </div>
         </>
     );
