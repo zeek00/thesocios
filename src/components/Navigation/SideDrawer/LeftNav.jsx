@@ -36,7 +36,7 @@ const Nav = styled.nav`
       flex-direction: column;
       gap: 0.2rem;
       .button{
-        color: #023e8a;
+        color: #0077b6;
         text-decoration-line: none;
         &:active{
           padding: 0.6rem;

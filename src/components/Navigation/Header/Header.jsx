@@ -13,68 +13,32 @@ const Container = styled.nav`
     .burger{
         display: none;
     }
-    @media only screen and (min-width: 1200px) {
-        /* Styles for large desktops */
-        .logo{
-            width: 70%;
-            padding-left: 0.8rem;
+    
+    .logo{
+        color: #fff;
+        font-family: "Pacifico", cursive;
+        font-style: normal;
+        cursor: pointer;
+        width: 70%;
+        padding-left: 0.8rem;
+        span{
             font-family: "Pacifico", cursive;
-            font-weight: 400;
-            font-style: normal;
-            color: #fff;
-            span{
-                color: ${({ type }) => type ? '#fff' : '#0077b6'};
-    
-            }
-        }
-        .btn-elements{
-            width: 30%;
-            display: flex;
-            justify-content: end;
-            padding-right: 1rem;
-            gap: 1rem;
-    
-        }
+            color: ${({ type }) => type ? '#fff' : '#0077b6'};
 
-    }
-    @media only screen and (min-width: 768px) {
-        /* Styles for tablets */
-        .logo{
-            width: 70%;
-            padding-left: 0.8rem;
-            font-family: "Pacifico", cursive;
-            font-weight: 400;
-            font-style: normal;
-            color: #fff;
-            span{
-                color: ${({ type }) => type ? '#fff' : '#0077b6'};
-    
-            }
-        }
-        .btn-elements{
-            width: 30%;
-            display: flex;
-            justify-content: end;
-            padding-right: 1rem;
-            gap: 1rem;
-    
         }
     }
+    .btn-elements{
+        width: 30%;
+        display: flex;
+        justify-content: end;
+        padding-right: 1rem;
+        gap: 1rem;
 
+    }
     @media only screen and (max-width: 576px) {
         /* Styles for small mobile screens */
         .logo{
-            width: 70%;
-            padding-left: 0.8rem;
-            font-family: "Pacifico", cursive;
             font-size: 1rem;
-            font-weight: 400;
-            font-style: normal;
-            color: #fff;
-            span{
-                color: ${({ type }) => type ? '#fff' : '#0077b6'};
-    
-            }
         }
         .btn-elements{
             display: none;
@@ -103,7 +67,7 @@ const Header = (props) => {
            <h2 className='logo'><span>we</span>Connect <span>.</span></h2>
 
             <div className="btn-elements">
-              {items.map((data, index)=><Btn label={data.label} link={data.link} index={index} />)}
+              {items.map((data, index)=><Btn type={props.type} label={data.label} link={data.link} index={index} />)}
             </div>
             <div className="burger">
                 <Burger/>

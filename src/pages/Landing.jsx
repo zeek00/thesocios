@@ -21,7 +21,6 @@ const Container = styled.div`
         align-items: center;
         margin: 5rem 0 2rem 0;
         h1{
-            font-family: "Ubuntu", sans-serif;
             text-align: center;
             font-size: 3rem;
             @media only screen and (max-width: 576px) {
@@ -95,12 +94,9 @@ const Landing = (props) => {
             </div>
 
 			<div className="main-action">
-
                 <h1>Explore ideas and <br/> connect with others </h1>
                 <p>Join us today and enjoy the benefits of an active community</p>
                 <Link className="action-btn" to='/sign-up'>Create an Account</Link>
-                
-
             </div>
 
             <div className="slider">

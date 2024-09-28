@@ -107,7 +107,7 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
             <label htmlFor={name}>{label}</label>
             <input
                 className={classes.input}
-                type={type}
+                type="phone"
                 id={name}
                 name={name}
                 placeholder={label}
@@ -123,7 +123,7 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
             <label htmlFor={name}>{label}</label>
             <input
                 className={classes.input}
-                type={type}
+                type="email"
                 id={name}
                 name={name}
                 placeholder={label}

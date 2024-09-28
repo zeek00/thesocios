@@ -63,22 +63,22 @@ const Login = () => {
     const onAuth = formData => dispatch(actions.auth(formData));
     const onUnload = () => dispatch(actions.onUnload());
 
-    useEffect(() => {
-        componentCheckAuth();
-        return () => {
-            onUnload();
-        };
-    }, [setOTP, isAuth, loading]);
+    // useEffect(() => {
+    //     componentCheckAuth();
+    //     return () => {
+    //         onUnload();
+    //     };
+    // }, [setOTP, isAuth, loading]);
 
-    const componentCheckAuth = () => {
-        if (setOTP && !loading) {
-            history.push("/verify-otp");
-        }
+    // const componentCheckAuth = () => {
+    //     if (setOTP && !loading) {
+    //         history.push("/verify-otp");
+    //     }
 
-        if (isAuth && !loading) {
-            history.push("/dashboard");
-        }
-    };
+    //     if (isAuth && !loading) {
+    //         history.push("/dashboard");
+    //     }
+    // };
 
     const inputChangedHandler = (event, inputIdentifier) => {
         const updatedLoginForm = {
