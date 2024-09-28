@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import classes from './Login.module.css';
-import Input from '../../../components/UI/Input/Input';
-import Button from '../../../components/UI/Button/Button';
-import { checkValidity } from '../../../shared/Method';
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
+import { checkValidity } from '../../shared/Method';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from "../../../store/actions";
-import { OverlaySpinner } from '../../../components/UI/Spinner/OverlaySpinner';
+import * as actions from "../../store/actions";
+import { OverlaySpinner } from '../../components/UI/Spinner/OverlaySpinner';
 import { NavLink, useHistory } from 'react-router-dom';
-import Header from '../../../components/Navigation/Header/Header';
+import Header from '../../components/Navigation/Header/Header';
 
 const bgLeft = {
     backgroundImage: '#fff',
@@ -63,22 +63,22 @@ const Login = () => {
     const onAuth = formData => dispatch(actions.auth(formData));
     const onUnload = () => dispatch(actions.onUnload());
 
-    useEffect(() => {
-        componentCheckAuth();
-        return () => {
-            onUnload();
-        };
-    }, [setOTP, isAuth, loading]);
+    // useEffect(() => {
+    //     componentCheckAuth();
+    //     return () => {
+    //         onUnload();
+    //     };
+    // }, [setOTP, isAuth, loading]);
 
-    const componentCheckAuth = () => {
-        if (setOTP && !loading) {
-            history.push("/verify-otp");
-        }
+    // const componentCheckAuth = () => {
+    //     if (setOTP && !loading) {
+    //         history.push("/verify-otp");
+    //     }
 
-        if (isAuth && !loading) {
-            history.push("/dashboard");
-        }
-    };
+    //     if (isAuth && !loading) {
+    //         history.push("/dashboard");
+    //     }
+    // };
 
     const inputChangedHandler = (event, inputIdentifier) => {
         const updatedLoginForm = {
