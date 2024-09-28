@@ -292,7 +292,7 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
       {label === 'Profile Photos' && (
         <div className={classes.structure}>
           <label>{label}</label>
-          <ImageBox amount={6} />
+          <ImageBox selected={value} amount={6} />
           <p className={classes.imageP}>
             Upload 2 photos to start. Add 4 more to make <br />
             your profile stand out{' '}

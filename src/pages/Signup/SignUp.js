@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import classes from './SignUp.module.css';
-import {SignUpBg, ApiEndpoints} from '../../../config/Config';
-import {checkValidity} from '../../../shared/Method'
-import Input from '../../../components/UI/Input/Input'
-import Button from '../../../components/UI/Button/Button'
+import {SignUpBg, ApiEndpoints} from '../../config/Config';
+import {checkValidity} from '../../shared/Method'
+import Input from '../../components/UI/Input/Input'
+import Button from '../../components/UI/Button/Button'
 import {connect} from 'react-redux';
-import * as actions from "../../../store/actions";
-import { OverlaySpinner } from '../../../components/UI/Spinner/OverlaySpinner';
+import * as actions from "../../store/actions";
+import { OverlaySpinner } from '../../components/UI/Spinner/OverlaySpinner';
 import {NavLink} from 'react-router-dom'
-import {OTPIcon, VerifyIcon} from '../../../config/Config'
-import { SERVER_REQUEST } from '../../../shared/Backend';
+import {OTPIcon, VerifyIcon} from '../../config/Config'
+import { SERVER_REQUEST } from '../../shared/Backend';
 import { PaystackButton } from 'react-paystack';
 import { toast } from 'react-toastify';
 import { dataOne, dataTwo } from './data';

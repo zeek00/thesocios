@@ -7,7 +7,7 @@ import Orientation from './UI/Orientation';
 import Activities from './UI/Activities';
 import Photos from './UI/Photos/Photos';
 import Input from './UI/Input';
-import {hobbies, interests } from '../../../../components/UI/Form/Interests/data';
+import {hobbies, interests } from '../../../components/UI/Form/Interests/data';
 
 
 const ProgressTracker = styled.div`
@@ -100,7 +100,6 @@ const SmallScreens = ({setData}) => {
 
     });
 
-    console.log(formData);
     const formFields = [
         { name: 'firstname', label: formOne.firstname.title, type: 'name', description: formOne.firstname.info },
         { name: 'lastname', label: formOne.lastname.title, type: 'name', description: formOne.lastname.info },
