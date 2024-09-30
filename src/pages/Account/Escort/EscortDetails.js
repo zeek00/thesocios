@@ -4,7 +4,7 @@ import classes from './Escort.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
 import {WelcomeBg, ApiEndpoints} from '../../../config/Config';
-import { EscortProfileCard } from '../../../components/Account/EscortCards/EscortCard';
+// import { EscortProfileCard } from '../../../components/Account/EscortCards/EscortCard';
 import { NavLink } from 'react-router-dom';
 import { SingleEscortCard } from '../../../components/Account/EscortCards/SingleEscort';
 import { PaystackButton } from 'react-paystack';

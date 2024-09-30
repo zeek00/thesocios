@@ -1,6 +1,4 @@
 import React from 'react';
-import Navigationitems from '../NavigationItems/NavigationItems';
-import Logo from '../../Logo/Logo';
 import styled from 'styled-components';
 import Btn from '../../UI/Button/Btn';
 import Burger from '../SideDrawer/Burger';
@@ -67,7 +65,7 @@ const Header = (props) => {
            <h2 className='logo'><span>we</span>Connect <span>.</span></h2>
 
             <div className="btn-elements">
-              {items.map((data, index)=><Btn type={props.type} label={data.label} link={data.link} index={index} />)}
+              {items.map((data, index)=><Btn type={props.type} label={data.label} link={data.link} key={index} />)}
             </div>
             <div className="burger">
                 <Burger/>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 import classes from './SignUp.module.css';
-import { SignUpBg, ApiEndpoints } from '../../config/Config';
-import { SERVER_REQUEST } from '../../shared/Backend';
+// import { SignUpBg, ApiEndpoints } from '../../config/Config';
+// import { SERVER_REQUEST } from '../../shared/Backend';
 import SmallScreens from './Screens/SmallScreens';
 import Header from '../../components/Navigation/Header/Header';
 import LargeScreens from './Screens/LargeScreens';
@@ -11,7 +11,7 @@ import LargeScreens from './Screens/LargeScreens';
 const SignUp = (props) => {
    
     const [authData, setAuthData] = useState([]);
-    console.log(`this is the form data:  ${authData}`);
+    console.log(authData);
    
 
     return (

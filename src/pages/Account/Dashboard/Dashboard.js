@@ -3,7 +3,7 @@ import classes from './Dashboard.module.css';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
-import {WelcomeBg, ApiEndpoints} from '../../../config/Config';
+import {WelcomeBg} from '../../../config/Config';
 import { EscortProfileCard } from '../../../components/Account/EscortCards/EscortCard';
 
 const bannerStyle = {

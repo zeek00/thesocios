@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './EscortCard.module.css';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { BASE_URL } from '../../../config/Config';
+// import { BASE_URL } from '../../../config/Config';
 
 
 export const EscortProfileCard = (props) => {

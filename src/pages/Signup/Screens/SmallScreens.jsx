@@ -32,8 +32,8 @@ const Container = styled.div`
       border-style: none;
       width: fit-content;
       background: none;
-      font-size: 1.8rem;
-      font-weight: 600;
+      font-size: 1.6rem;
+      font-weight: 400;
       color: rgb(114, 117, 128);
       outline: none;
     }
@@ -69,9 +69,9 @@ const Button = styled.button`
     width: 100%;
     margin: 10px auto;
     padding: 0.5rem 1rem;
-    background-color: ${({ isComplete, disabled }) => {
+    background-color: ${({ iscomplete, disabled }) => {
       if (disabled) return 'rgb(114, 117, 128)';
-      if (isComplete) return '#023e8a';
+      if (iscomplete) return '#023e8a';
       return 'rgb(114, 117, 128)';
     }};
     color: white;
@@ -219,6 +219,7 @@ const SmallScreens = ({setData}) => {
             <ContentWrapper>
                 <div>
                     <h2 htmlFor={currentField.name}>{currentField.label}</h2>
+
                     {currentField.type && <Input
                     id={currentField.name}
                     name={currentField.name}
@@ -227,13 +228,14 @@ const SmallScreens = ({setData}) => {
                     onChange={handleChange}
                     required
                     />}
+
                     {currentField.name === 'birthday' && 
                     <Birthday
                     id={currentField.name}
                     name={currentField.name}
                     value={formData.birthday}  
                     onChange={handleBirthdayChange} 
-
+                    required
                     />}
 
                     {currentField.name === 'gender' && 
@@ -242,7 +244,7 @@ const SmallScreens = ({setData}) => {
                     onGenderChange={handleGenderChange}
                     showGender={formData.showGender}
                     onShowGenderChange={handleShowGenderChange}
-
+                    required
                     />}
 
                     {currentField.name === 'orientation' && 
@@ -295,10 +297,13 @@ const SmallScreens = ({setData}) => {
             
            
 
-            <Button onClick={handleNext} isComplete={step === formFields.length - 1}  disabled={isCurrentFieldEmpty} >
-                {step < formFields.length - 1 ? 'Next' : 'Submit'}
+            <Button
+              onClick={handleNext}
+              iscomplete={step === formFields.length - 1 ? 'true' : undefined} // Omit when false
+              disabled={isCurrentFieldEmpty}
+            >
+              {step < formFields.length - 1 ? 'Next' : 'Submit'}
             </Button>
-
         </Container>
         
 

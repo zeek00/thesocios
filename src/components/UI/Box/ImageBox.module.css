@@ -20,11 +20,7 @@ input{
     height: 11.25rem;
   }
 
-  @media only screen and (min-width: 1024px) and (max-width: 1439px) {
-    .box {
-      width: 7.5rem;
-      height: 7.5rem;
-    }  }
+ 
   
 
   .uploadLabel{
@@ -53,4 +49,19 @@ input{
     height: 11.25rem;  /* Maintains the aspect ratio */
     object-fit: cover; /* Ensures the image covers the box while keeping aspect ratio */
     border-radius: 0.5rem;
+  }
+
+  @media only screen and (min-width: 1023px) and (max-width: 1439px) {
+    .box {
+      width: 7.5rem;
+      height: 7.5rem;
+
+    } 
+    .uploadedImage {
+      width: 7.5rem;
+      height: 7.5rem;
+      object-fit: cover; /* Ensures the image covers the box while keeping aspect ratio */
+      border-radius: 0.5rem;
+    } 
+  
   }
