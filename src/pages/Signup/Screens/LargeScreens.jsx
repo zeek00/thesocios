@@ -175,6 +175,12 @@ const LargeScreens = ({ setData }) => {
         setFormData({ ...formData, showGender });
     };
 
+
+    const fileChangedHandler = (event) => {
+      const updatedPhotos = Array.from(event.target.files);
+      setFormData({ ...formData, photos: updatedPhotos });
+  };
+
     // Optional: Submit data to parent
     const handleSubmit = () => {
         setData(formData); // Pass data to the parent component (if needed)
@@ -309,6 +315,7 @@ const LargeScreens = ({ setData }) => {
               label="Profile Photos" 
               name="photos"
               value={formData.photos}
+              onChange={fileChangedHandler}
             />
             {formErrors.photos && <p className="help">{formErrors.photos}</p>}
 
