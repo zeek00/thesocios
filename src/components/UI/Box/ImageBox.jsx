@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './ImageBox.module.css'; // Import the CSS for grid styles
 
 const ImageBox = ({ amount, selected }) => {
@@ -13,17 +13,16 @@ const ImageBox = ({ amount, selected }) => {
         const file = event.target.files[0];
         if (file) {
             const newImages = [...images];
+    
+            // Create a URL for the raw image file
+            const imageUrl = URL.createObjectURL(file);
             
-            // Create a URL for the image or base64 string
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                newImages[index] = reader.result; // Store base64 data or URL
-                setImages(newImages);
-
-                // Add the image string to selected array
-                selected.push(reader.result); // Update selected array with the clicked image as string
-            };
-            reader.readAsDataURL(file); // Read file as base64
+            // Store the URL in the images array and update the state
+            newImages[index] = imageUrl;
+            setImages(newImages);
+    
+            // Push the raw image URL to the selected array
+            selected.push(imageUrl); // Update selected array with the raw image URL
         }
     };
 

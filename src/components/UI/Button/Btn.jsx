@@ -21,7 +21,7 @@ const Container = styled.span`
 
 `;
 
-const Btn = ({label, link}) => {
+const Btn = ({label, link,}) => {
   return (
     <Container>
         <NavLink className='btn' to={link}>

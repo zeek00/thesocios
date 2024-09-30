@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
 import { OverlaySpinner } from '../../components/UI/Spinner/OverlaySpinner';
 import {NavLink} from 'react-router-dom'
-import {OTPIcon, VerifyIcon} from '../../config/Config'
+import { VerifyIcon} from '../../config/Config'
 import { SERVER_REQUEST } from '../../shared/Backend';
 import { PaystackButton } from 'react-paystack';
 import { toast } from 'react-toastify';

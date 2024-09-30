@@ -14,6 +14,7 @@ const PassStyle = styled.div`
 
     input{
         border: none;
+        outline: none;
         width: 100%;
        
     }
@@ -35,18 +36,12 @@ const PassStyle = styled.div`
 
 
 const Input = ({id, name, type, onChange, value}) => {
-    const [password, setPassword] = useState(''); // State to manage password input value
     const [passClick, setPassClick] = useState(false)
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const handleInputChange = (event) => {
-        const value = event.target.value;
-        setPassword(value);
-
-        // Change border color when typing
-    };
+ 
     const handlePassClick = () => {
-        setPassClick(!passClick) 
+        setPassClick(!passClick)
     };
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -69,7 +64,7 @@ const Input = ({id, name, type, onChange, value}) => {
 
 {
             id === 'password' && (
-                <PassStyle click={passClick} >
+                <PassStyle click={passClick ? passClick : undefined} >
 
                     <input
                         type={passwordVisible ? 'text' : type}
@@ -77,11 +72,12 @@ const Input = ({id, name, type, onChange, value}) => {
                         id={id}
                         name={name}
                         value={value}
+                        onClick={handlePassClick}
                         onChange={onChange}
                         required
                     />
                     <button onClick={togglePasswordVisibility}>
-                        {passwordVisible ? <FaEyeSlash style={{color: '#023e8a'}} /> : <FaEye />} {/* Conditionally render eye icons */}
+                        {passwordVisible ? <FaEyeSlash style={{color: '#023e8a'}} /> : <FaEye />}
                     </button>
                 </PassStyle>
             

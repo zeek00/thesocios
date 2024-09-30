@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+
 import classes from '../SignUp.module.css';
 import Fields from '../../../components/UI/Form/Fields';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import validator from 'validator';
 
 const ValidateBox = styled.div`
   .help{
@@ -38,149 +41,210 @@ const Button = styled.div`
 
 
 const LargeScreens = ({ setData }) => {
-    const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        username: '',
-        email: '',
-        phone: '',
-        password: '',
-        birthday: { day: '', month: '', year: '' },
-        gender: '',
-        showGender: false,
-        interests: [],
-        hobbies: [],
-        photos: []
-    });
-    const [formIsValid, setFormIsValid] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    phone: '',
+    password: '',
+    birthday: '',
+    gender: '',
+    showGender: false,
+    interests: [],
+    hobbies: [],
+    photos: []
+  });
 
-    const [formErrors, setFormErrors] = useState({});
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [, setModalDone] = useState(false);
+  const [birthday, setBirthday] = useState({birthday:''})
 
-    // Handle form field changes
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value
-        }));
-        validateFields(name, value);
-    }
 
-    const validateFields = (name, value) => {
-        let errors = { ...formErrors };
-        let isValid = true;
-
-        // Simple regex patterns for validation
-        const namePattern = /^[A-Za-z]{3,}$/; // Only allows letters
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
-        const usernamePattern = /^[a-zA-Z0-9_]{3,}$/; // Alphanumeric with underscores, at least 3 characters
-        const passwordPattern = /^.{6,}$/; // At least 6 characters
-        const phonePattern = /^\d{7,15}$/; // Allows between 7 and 15 digits
-        // Validation rules for each field
-
-        switch (name) {
-            case 'firstname':
-                errors.firstname = namePattern.test(value) ? '' : 'First name must be at least 3 characters and contain only letters';
-                break;
-            case 'lastname':
-                errors.lastname = namePattern.test(value) ? '' : 'Last name must be at least 3 characters and contain only letters';
-                break;
-            case 'email':
-                errors.email = emailPattern.test(value) ? '' : `Invalid email format example 'something@gmail.com'`;
-                break;
-            case 'username':
-                errors.username = usernamePattern.test(value) ? '' : 'Username must be at least 3 characters long and can only contain letters, numbers, or underscores';
-                break;
-            case 'password':
-                errors.password = passwordPattern.test(value) ? '' : 'Password must be at least 6 characters long';
-                break;
-            case 'phone':
-              errors.phone = phonePattern.test(value) ? '' : 'Phone allows between 7 and 15 digits including country code';
-              break;
-            case 'birthday':
-              const { day, month, year } = formData.birthday;
-
-              if (!day || !month || !year) {
-                  errors.birthday = 'Birthday must include day, month, and year';
-              } else {
-                  errors.birthday = '✅';
-              }
-              break;
-            case 'gender':
-              if (formData.gender.length === "") {
-                errors.gender = 'Gender is required';
-            } else {
-                errors.gender = '✅';
-            }
-              break;
-            case 'interests':
-              errors.interests = Array.isArray(value) && value.length >= 5 ? '✅' : 'Please select at least 5 interests';
-              break;
-            case 'hobbies':
-              errors.hobbies = Array.isArray(value) && value.length >= 5 ? '✅' : 'Please select at least 5 hobbies';
-              break;
-            case 'photos':
-              errors.hobbies = Array.isArray(value) && value.length >= 2 ? '✅' : 'Please select at least 2 photos';
-              break;
-            default:
-                break;
-        }
-      // Update formErrors state
-      setFormErrors(errors);
-      validateForm();
-
-      // Update formIsValid based on whether all fields are valid
-    };
-    
-    const validateForm = () => {
-      const { firstname, lastname, username, email, phone, password, birthday, gender, interests, hobbies, photos } = formData;
-      const { day, month, year } = birthday;
-
-      const isFormValid = 
-          firstname && /^[A-Za-z]{3,}$/.test(firstname) &&
-          lastname && /^[A-Za-z]{3,}$/.test(lastname) &&
-          email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-          username && /^[a-zA-Z0-9_]{3,}$/.test(username) &&
-          password && password.length >= 6 &&
-          phone && /^\d{7,15}$/.test(phone) &&
-          day && month && year &&
-          gender &&
-          Array.isArray(interests) && interests.length >= 5 &&
-          Array.isArray(hobbies) && hobbies.length >= 5 &&
-          Array.isArray(photos) && photos.length >= 2;
-
-      setFormIsValid(isFormValid);
+  const showToastError = (message) => {
+    toast.error(message, { position: toast.POSITION.TOP_RIGHT });
   };
 
 
-    const handleBirthdayChange = (field, value) => {
-        setFormData({
-        ...formData,
-        birthday: {
-            ...formData.birthday,
-            [field]: value,
-        },
+
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value
+      }));
+      validateFields(name, value);
+  }
+
+  const handleBirthdayChange = (field, value) => {
+    setBirthday({
+    ...birthday,
+    birthday: {
+        ...birthday.birthday,
+        [field]: value,
+    },
+    });
+    const { day, month, year } = birthday.birthday;
+    const formattedBirthday = `${day}/${month}/${year}`;
+    formData.birthday = formattedBirthday
+    validateFields("birthday", formattedBirthday);
+  };
+  
+  const handleGenderChange = (gender) => {
+      setFormData({ ...formData, gender });
+      validateFields("gender", gender);
+
+  };
+
+  const handleShowGenderChange = (showGender) => {
+      setFormData({ ...formData, showGender });
+  };
+
+    
+  const handleSubmit = () => {
+    validateAllFields();
+  
+    if (formIsValid) {
+        setData(formData);
+    } else {
+        Object.values(formErrors).forEach((error) => {
+            if (error) {
+                showToastError(error);  
+            }
         });
-        validateFields("birthday", formData.birthday);
 
-    };
-    // Handler for gender fields
-    const handleGenderChange = (gender) => {
-        setFormData({ ...formData, gender });
-        validateFields("gender", formData.gender);
+        showToastError("Please fill in all required fields correctly.");
+    }
+  };
 
-    };
+  const validateAllFields = () => {
+    const fieldsToValidate = [
+        'firstname', 
+        'lastname', 
+        'username', 
+        'email', 
+        'phone', 
+        'password', 
+        'birthday', 
+        'gender', 
+        'interests', 
+        'hobbies', 
+        'photos'
+    ];
 
-    const handleShowGenderChange = (showGender) => {
-        setFormData({ ...formData, showGender });
-    };
+    fieldsToValidate.forEach((field) => {
+        validateFields(field, formData[field]);
+    });
+  };
 
-    // Optional: Submit data to parent
-    const handleSubmit = () => {
-        setData(formData); // Pass data to the parent component (if needed)
-    };
+  const validateFields = (name, value) => {
+    let errors = { ...formErrors };
+    switch (name) {
+      case 'firstname':
+        errors.firstname = validator.isEmpty(value, { min: 1 }) ? 'First name is required' 
+        : validator.isLength(value, { min: 3 }) && validator.isAlpha(value)
+        ? '' 
+        : 'First name must be at least 3 characters and contain only letters';
+        break;
+      case 'lastname':
+        errors.lastname = validator.isEmpty(value, { min: 1 }) ? 'Last name is required' 
+        : validator.isLength(value, { min: 3 }) && validator.isAlpha(value)
+        ? '' 
+        : 'Last name must be at least 3 characters and contain only letters';
+        break;
+      case 'email':
+        errors.email = validator.isEmpty(value, { min: 1 }) ? 'Email is required' 
+        : validator.isEmail(value) 
+        ? ''
+        : `Invalid email format (example: 'something@gmail.com')`;
+        break;
+      case 'username':
+        errors.username = validator.isEmpty(value, { min: 1 }) ? 'User name is required' 
+        : validator.isLength(value, { min: 5})
+        ? '' 
+        : 'Username must be at least 5 characters long and can only contain letters, numbers, or underscores';
+        break;
+      case 'password':
+        errors.phone = validator.isStrongPassword(value, {minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})
+        ? '' 
+        : 'Password must be 8 characters long and contain a lowercase, uppercase, number and special character';
+        break;
+      case 'phone':
+        errors.phone = validator.isEmpty(value, { min: 1 }) ? 'Phone number is required' 
+        : validator.isMobilePhone(value, 'any', { strictMode: true })
+        ? '' 
+        : 'Phone number must be between 7 and 15 digits, including country code';
+        break;
+      case 'birthday':
+        errors.birthday = validator.isDate(formData.birthday, {format: 'DD/MM/YYYY',strictMode: true})
+        ? ''
+        : 'Birthday must include day, month, and year';
+        break;
+      case 'gender':
+        errors.gender = validator.isLength(formData.gender, { min: 3}) ?  'Gender is required' : '';
+        break;
+      case 'interests':
+        errors.interests = formData.interests.length === 5 ? '' : 'Please select at least 5 interests';
+        break;
+      case 'hobbies':
+        errors.hobbies = formData.hobbies.length === 5 ? '' : 'Please select at least 5 hobbies';
+        break;
+      case 'photos':
+        errors.photos = value.length === 2 ? '' : 'Please select at least 2 photos';
+        break;
+      default:
+          break;
+    }
 
-    console.log(formData);
+    setFormErrors(errors);
+  };
+
+  const validateForm = useCallback(() => {
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      phone,
+      password,
+      birthday,
+      gender,
+      interests,
+      hobbies,
+      photos,
+    } = formData;
+
+    const isFormValid =
+      validator.isLength(firstname, { min: 3 }) &&
+      validator.isAlpha(firstname) &&
+      validator.isLength(lastname, { min: 3 }) &&
+      validator.isAlpha(lastname) &&
+      validator.isEmail(email) &&
+      validator.isLength(username, { min: 5 }) &&
+      validator.isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      }) &&
+      validator.isMobilePhone(phone, 'any', { strictMode: true }) &&
+      validator.isDate(birthday, { format: 'DD/MM/YYYY', strictMode: true }) &&
+      validator.isLength(gender, { min: 3 }) &&
+      interests.length === 5 &&
+      hobbies.length === 5 &&
+      photos.length === 2;
+
+    return isFormValid;
+  }, [formData]); 
+  
+  useEffect(() => {
+    const isFormValid = validateForm(); 
+    setFormIsValid(isFormValid);
+  }, [formData, formErrors, validateForm]); 
 
   return (
     <>
@@ -196,7 +260,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.firstname}
                 onChange={handleChange} 
               />
-              {formErrors.firstname && <p className="help">{formErrors.firstname}</p>}
             </ValidateBox>
             
             <ValidateBox>            
@@ -207,7 +270,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.lastname}
                 onChange={handleChange}
               />
-                {formErrors.lastname && <p className="help">{formErrors.lastname}</p>}
             </ValidateBox>
 
             <ValidateBox>
@@ -218,7 +280,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.username}
                 onChange={handleChange}
               />
-                {formErrors.username && <p className="help">{formErrors.username}</p>}
             </ValidateBox>
 
             <ValidateBox>
@@ -229,7 +290,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.email}
                 onChange={handleChange}
               />
-                {formErrors.email && <p className="help">{formErrors.email}</p>}
             </ValidateBox>
 
             <ValidateBox>
@@ -240,7 +300,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.phone}
                 onChange={handleChange}
               />
-                {formErrors.phone && <p className="help">{formErrors.phone}</p>}
             </ValidateBox>
 
             <ValidateBox>
@@ -251,7 +310,6 @@ const LargeScreens = ({ setData }) => {
                 value={formData.password}
                 onChange={handleChange}
               />
-              {formErrors.password && <p className="help">{formErrors.password}</p>}
 
             </ValidateBox>
             
@@ -261,9 +319,8 @@ const LargeScreens = ({ setData }) => {
                   label={'Date of Birth'}
                   name="birthday"
                   value={formData.birthday}
-                  onChange={handleBirthdayChange}
+                  handleBirthdayChange={handleBirthdayChange}
               />
-              {formErrors.birthday && <p className="help">{formErrors.birthday}</p>}
 
             </ValidateBox>
 
@@ -277,7 +334,6 @@ const LargeScreens = ({ setData }) => {
                 showGender={formData.showGender}
                 onShowGenderChange={handleShowGenderChange}
               />
-              {formErrors.gender && <p className="help">{formErrors.gender}</p>}
 
             </ValidateBox>
 
@@ -286,8 +342,8 @@ const LargeScreens = ({ setData }) => {
                   label={'Interests'} 
                   name={"interests"}
                   value={formData.interests}
+                  onModalChange={setModalDone}
               />
-              {formErrors.interests && <p className="help">{formErrors.interests}</p>}
 
             </ValidateBox>
 
@@ -296,8 +352,8 @@ const LargeScreens = ({ setData }) => {
                 label={'Hobbies'}
                 name={"hobbies"}
                 value={formData.hobbies} 
+                onModalChange={setModalDone}
               />
-              {formErrors.hobbies && <p className="help">{formErrors.hobbies}</p>}
 
             </ValidateBox>
           </div>
@@ -310,19 +366,21 @@ const LargeScreens = ({ setData }) => {
               name="photos"
               value={formData.photos}
             />
-            {formErrors.photos && <p className="help">{formErrors.photos}</p>}
-
+ 
           </ValidateBox>
 
           </div>
           
         </div>
         <Button>
-          <Link onClick={handleSubmit} disabled={!formIsValid} style={{backgroundColor: formIsValid ? '#023e8a' : '#e9ebee', color: formIsValid? '#fff' : '#ccc' }}>
+          <Link  onClick={handleSubmit} disabled={!formIsValid} style={{backgroundColor: formIsValid ? '#023e8a' : '#e9ebee', color: formIsValid ? '#fff' : '#ccc' }}>
             Next
           </Link>
 
         </Button>
+
+        <ToastContainer />
+
         
       </div>
     </>

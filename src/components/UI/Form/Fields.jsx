@@ -3,7 +3,6 @@ import classes from './Fields.module.css';
 import ImageBox from '../Box/ImageBox';
 import Modal from '../Modal/Modal';
 import LookingForDetaiils from './LookingForDetails/LookingForDetails';
-import SexualOrientation from './SexualOrientation/SexualOrientation';
 import Interests from './Interests/Interests';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons from react-icons
 import styled from 'styled-components';
@@ -33,10 +32,8 @@ const PassStyle = styled.div`
   }
 `;
 
-const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender, onShowGenderChange }) => {
-    const [modalDone, setModalDone] = useState(false);
-    const genderOptions = ['Man', 'Woman', 'More >'];
-  const [isChecked, setIsChecked] = useState(false);
+const Fields = ({ type, label, name, value, onChange, handleBirthdayChange, onGenderChange, showGender, onShowGenderChange, onModalChange }) => {
+  const genderOptions = ['Man', 'Woman', 'More >'];
   const [clicked, setClicked] = useState(null);
   const [passClick, setPassClick] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -45,13 +42,15 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
 
   const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
 
+
+
   const handleCheckboxChange = (event) => {
     onShowGenderChange(event.target.checked);
     // Notify parent component about checkbox changes
   };
 
-  const handleGenderSelect = (index) => {
-    onGenderChange(genderOptions[index]); // Update parent component's state
+  const handleGenderSelect = (item) => {
+    onGenderChange(item); // Update parent component's state
   };
 
 
@@ -154,7 +153,7 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
       {label === 'Password' && (
         <div className={classes.contain}>
           <label htmlFor={name}>{label}</label>
-          <PassStyle click={passClick}>
+          <PassStyle click={passClick ? passClick : undefined}>
             <input
               className={classes.input}
               type={passwordVisible ? 'text' : 'password'}
@@ -192,8 +191,12 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
                                 min="1"
                                 max="31"
                                 value={value.day}
-                                onChange={(e) => onChange('day', e.target.value)} 
-                                className={classes.birthdayInput} 
+                                onChange={(e) => handleBirthdayChange('day', e.target.value)}
+                                onBlur={(e) => {
+                                  const day = Math.max(1, Math.min(31, e.target.value)); 
+                                  handleBirthdayChange('day', day);
+                              }}                                 
+                              className={classes.birthdayInput} 
                             />
                         </span>
                         
@@ -209,7 +212,11 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
                                 min="1"
                                 max="12"
                                 value={value.month}
-                                onChange={(e) => onChange('month', e.target.value)}
+                                onChange={(e) => handleBirthdayChange('month', e.target.value)}
+                                onBlur={(e) => {
+                                  const month = Math.max(1, Math.min(12, e.target.value)); // Enforce min/max
+                                  handleBirthdayChange('month', month);
+                                }}
                                 className={classes.birthdayInput} 
                             />
                         </span>
@@ -225,7 +232,11 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
                                 min="1900"
                                 max="2024"
                                 value={value.year}
-                                onChange={(e) => onChange('year', e.target.value)}
+                                onChange={(e) => handleBirthdayChange('year', e.target.value)}
+                                onBlur={(e) => {
+                                  const year = Math.max(1900, Math.min(2024, e.target.value)); // Enforce min/max
+                                  handleBirthdayChange('year', year);
+                                }}                                  
                                 className={classes.birthdayInput} 
                             />
                         </span>
@@ -250,11 +261,11 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
             </div>
           </div>
           <div className={classes.genderContainer}>
-          {genderOptions.map((gender, index) => (
+          {genderOptions.map((gender) => (
                 <button
                 key={gender}
                 className={classes.gender}
-                onClick={() => handleGenderSelect(index)}
+                onClick={() => handleGenderSelect(gender)}
                 style={{
                     backgroundColor: value === gender ? '#023e8a' : 'transparent',
                     color: value === gender ? '#fff' : '#000',
@@ -275,7 +286,6 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
           <button value="interests" className={classes.intent} onClick={openModalHandler}>
             + Interests
           </button>
-          {modalDone && <p>✅</p>}
         </div>
       )}
       {label === 'Hobbies' && (
@@ -284,8 +294,6 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
           <button value="hobbies" className={classes.intent} onClick={openModalHandler}>
             + Hobbies
           </button>
-          {modalDone && <p>✅</p>}
-
         </div>
       )}
 
@@ -302,8 +310,8 @@ const Fields = ({ type, label, name, value, onChange, onGenderChange, showGender
 
       <Modal show={showModal} modalClosed={closeModalHandler}>
         {clicked === 'lookingfor' && <LookingForDetaiils modalClosed={closeModalHandler} />}
-        {clicked === 'interests' && <Interests selectedValues={value} setComplete={setModalDone} modalClosed={closeModalHandler} />}
-        {clicked === 'hobbies' && <Hobbies selectedValues={value} setComplete={setModalDone} modalClosed={closeModalHandler} />}
+        {clicked === 'interests' && <Interests selectedValues={value} setComplete={onModalChange} modalClosed={closeModalHandler} />}
+        {clicked === 'hobbies' && <Hobbies selectedValues={value} setComplete={onModalChange} modalClosed={closeModalHandler} />}
       </Modal>
     </>
   );

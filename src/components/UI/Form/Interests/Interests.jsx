@@ -32,13 +32,10 @@ const SaveButton = styled.button`
   width: 100%;
   margin: 10px auto;
   padding: 0.5rem 1rem;
-  background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : '#ccc')};
   color: white;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  opacity: ${({ isSelected }) => (isSelected ? '1' : '0.5')};
-  pointer-events: ${({ isSelected }) => (isSelected ? 'auto' : 'none')};
 `;
 const Items = styled.div`
     display: flex;
@@ -53,14 +50,9 @@ const Span = styled.span`
     padding: 0.2rem;
     border-radius: 0.4rem;
     cursor: pointer;
-    color: ${({ isSelected }) => (isSelected ? '#fff' : 'silver')};
-    background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : 'none')};
-
-
 `;
 
 const Interests = ({modalClosed, setComplete, selectedValues}) => {
-    const [count, setCount] = useState(0);
     const [done, setDone] = useState(false);
     const [selectedInterests, setSelectedInterests] = useState([]); 
 
@@ -68,17 +60,18 @@ const Interests = ({modalClosed, setComplete, selectedValues}) => {
         if (selectedInterests.includes(item.data)) {
           // Deselect if already selected
           setSelectedInterests(selectedInterests.filter((i) => i !== item.data));
-        } else if (selectedInterests.length < 5) {
-          // Only allow adding if less than 5 are selected
-          setCount(count+1)
-          setSelectedInterests([...selectedInterests, item.data]);
+        }else if (selectedInterests.length < 5) {
+            // Only allow adding if less than 5 are selected
+            setSelectedInterests([...selectedInterests, item.data]);
         }
+    
     };
 
     const handleSave = () => {
         // Handle the save action here
         selectedValues.push(...selectedInterests);
         setComplete(!done);
+        setDone(done)
         modalClosed();
         // You can perform further actions like submitting the selected box data
     };
@@ -94,16 +87,26 @@ const Interests = ({modalClosed, setComplete, selectedValues}) => {
                 <Span 
                 key={index}
                 onClick={() => handleClick(item)}
-                isSelected={selectedInterests.includes(item.data)}
-                isDisabled={selectedInterests.length === 3 && !selectedInterests.includes(index)}
+                style={{
+                    backgroundColor: selectedInterests.includes(item.data) ? '#023e8a' : '#000', 
+                    color: selectedInterests.includes(item.data) ? '#fff' : '#ccc'  
+                }}
                 >{item.data}</Span>
             )
         )}
         </Items>
         
 
-        <SaveButton className="save-btn" onClick={handleSave} isSelected={selectedInterests.length === 5} >
-            Save {`${count}/5`}
+        <SaveButton className="save-btn" 
+            onClick={handleSave}
+            style={{
+                backgroundColor: selectedInterests.length === 5 ? '#023e8a' : 'none', 
+                color: selectedInterests.length === 5 ? '#fff' : '#ccc',
+                opacity: selectedInterests.length === 5 ? '1' : '0.5',
+                pointerEvents: selectedInterests.length === 5 ? 'auto' : 'none' 
+            }}
+        >
+            Save {`${selectedInterests.length}/5`}
         </SaveButton>
       
     </Details>
