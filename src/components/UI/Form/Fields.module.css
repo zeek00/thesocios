@@ -202,7 +202,12 @@ input[type="text"] {
         transform: scale(1.05);
     }
     .checkbox p{
-        font-size: 0.8rem;
+        font-size: 0.5rem;
+    }
+    .checkbox input {
+        width: 1rem; /* Adjust width as needed */
+        height: 1rem;
+
     }
 
 }

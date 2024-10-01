@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import classes from './Photos.module.css'; // Import the CSS for grid styles
 
-const Photos = ({ amount }) => {
+const Photos = ({ amount, selected }) => {
     // State to store uploaded images
     const [images, setImages] = useState(Array(amount).fill(null));
 
@@ -10,12 +10,20 @@ const Photos = ({ amount }) => {
 
     // Handle image upload and update the state
     const handleImageChange = (event, index) => {
-    const file = event.target.files[0];
-    if (file) {
-        const newImages = [...images];
-        newImages[index] = URL.createObjectURL(file); // Create a URL for the image
-        setImages(newImages);
-    }
+        const file = event.target.files[0];
+        if (file) {
+            const newImages = [...images];
+
+            // Create a URL for the raw image file
+            const imageUrl = URL.createObjectURL(file);
+
+            // Store the URL in the images array and update the state
+            newImages[index] = imageUrl;
+            setImages(newImages);
+
+            // Push the raw image URL to the selected array
+            selected.push(imageUrl); // Update selected array with the raw image URL
+        }
     };
 
     // Function to trigger the hidden file input when clicking the "+" symbol

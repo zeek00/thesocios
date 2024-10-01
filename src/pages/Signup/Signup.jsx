@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
-import classes from './SignUp.module.css';
+import classes from './styles/SignUp.module.css';
 // import { SignUpBg, ApiEndpoints } from '../../config/Config';
 // import { SERVER_REQUEST } from '../../shared/Backend';
 import SmallScreens from './Screens/SmallScreens';
@@ -9,7 +9,6 @@ import LargeScreens from './Screens/LargeScreens';
 
 
 const SignUp = (props) => {
-   
     const [authData, setAuthData] = useState([]);
     console.log(authData);
    

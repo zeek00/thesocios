@@ -19,8 +19,6 @@ const Button = styled.button`
   border: 1px solid silver;
   padding: 0.2rem;
   border-radius: 0.4rem;
-  color: ${({ isSelected }) => (isSelected ? '#fff' : 'silver')};
-  background-color: ${({ isSelected }) => (isSelected ? '#023e8a' : 'transparent')};
   cursor: pointer;
 `;
 
@@ -35,10 +33,12 @@ const Activities = ({ activitiesData, selectedActivities, onSelectActivity, type
       <Items>
         {activitiesData.map((item, index) => (
           <Button
-            key={item}
+            key={index}
             onClick={() => handleClick(item)}
-            isSelected={selectedActivities.includes(index)}
-            isDisabled={selectedActivities.length >= 4 && !selectedActivities.includes(index)}
+            style={{
+                backgroundColor: selectedActivities.includes(item.data) ? '#023e8a' : 'rgb(248,248,248, 0.8)',
+                color: selectedActivities.includes(item.data) ? '#fff' : '#ccc'
+            }}
           >
             {item.data}
           </Button>
