@@ -1,18 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import classes from '../SignUp.module.css';
+import classes from '../styles/SignUp.module.css';
 import Fields from '../../../components/UI/Form/Fields';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import validator from 'validator';
 
-const ValidateBox = styled.div`
-  .help{
-    font-size: 0.6rem;
-    color: red;
-  }
-`;
+
 
 const Button = styled.div`
   border-style: none;
@@ -142,65 +137,113 @@ const LargeScreens = ({ setData }) => {
 
   const validateFields = (name, value) => {
     let errors = { ...formErrors };
+
     switch (name) {
-      case 'firstname':
-        errors.firstname = validator.isEmpty(value, { min: 1 }) ? 'First name is required' 
-        : validator.isLength(value, { min: 3 }) && validator.isAlpha(value)
-        ? '' 
-        : 'First name must be at least 3 characters and contain only letters';
-        break;
-      case 'lastname':
-        errors.lastname = validator.isEmpty(value, { min: 1 }) ? 'Last name is required' 
-        : validator.isLength(value, { min: 3 }) && validator.isAlpha(value)
-        ? '' 
-        : 'Last name must be at least 3 characters and contain only letters';
-        break;
-      case 'email':
-        errors.email = validator.isEmpty(value, { min: 1 }) ? 'Email is required' 
-        : validator.isEmail(value) 
-        ? ''
-        : `Invalid email format (example: 'something@gmail.com')`;
-        break;
-      case 'username':
-        errors.username = validator.isEmpty(value, { min: 1 }) ? 'User name is required' 
-        : validator.isLength(value, { min: 5})
-        ? '' 
-        : 'Username must be at least 5 characters long and can only contain letters, numbers, or underscores';
-        break;
-      case 'password':
-        errors.phone = validator.isStrongPassword(value, {minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})
-        ? '' 
-        : 'Password must be 8 characters long and contain a lowercase, uppercase, number and special character';
-        break;
-      case 'phone':
-        errors.phone = validator.isEmpty(value, { min: 1 }) ? 'Phone number is required' 
-        : validator.isMobilePhone(value, 'any', { strictMode: true })
-        ? '' 
-        : 'Phone number must be between 7 and 15 digits, including country code';
-        break;
-      case 'birthday':
-        errors.birthday = validator.isDate(formData.birthday, {format: 'DD/MM/YYYY',strictMode: true})
-        ? ''
-        : 'Birthday must include day, month, and year';
-        break;
-      case 'gender':
-        errors.gender = validator.isLength(formData.gender, { min: 3}) ?  'Gender is required' : '';
-        break;
-      case 'interests':
-        errors.interests = formData.interests.length === 5 ? '' : 'Please select at least 5 interests';
-        break;
-      case 'hobbies':
-        errors.hobbies = formData.hobbies.length === 5 ? '' : 'Please select at least 5 hobbies';
-        break;
-      case 'photos':
-        errors.photos = value.length === 2 ? '' : 'Please select at least 2 photos';
-        break;
-      default:
-          break;
+        case 'firstname':
+            if (validator.isEmpty(value, { min: 1 })) {
+                errors.firstname = 'First name is required';
+            } else if (!validator.isLength(value, { min: 3 }) || !validator.isAlpha(value)) {
+                errors.firstname = 'First name must be at least 3 characters and contain only letters';
+            } else {
+                errors.firstname = '';
+            }
+            break;
+
+        case 'lastname':
+            if (validator.isEmpty(value, { min: 1 })) {
+                errors.lastname = 'Last name is required';
+            } else if (!validator.isLength(value, { min: 3 }) || !validator.isAlpha(value)) {
+                errors.lastname = 'Last name must be at least 3 characters and contain only letters';
+            } else {
+                errors.lastname = '';
+            }
+            break;
+
+        case 'email':
+            if (validator.isEmpty(value, { min: 1 })) {
+                errors.email = 'Email is required';
+            } else if (!validator.isEmail(value)) {
+                errors.email = `Invalid email format (example: 'something@gmail.com')`;
+            } else {
+                errors.email = '';
+            }
+            break;
+
+        case 'username':
+            if (validator.isEmpty(value, { min: 1 })) {
+                errors.username = 'User name is required';
+            } else if (!validator.isLength(value, { min: 5 })) {
+                errors.username = 'Username must be at least 5 characters long and can only contain letters, numbers, or underscores';
+            } else {
+                errors.username = '';
+            }
+            break;
+
+        case 'password':
+            if (!validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 })) {
+                errors.password = 'Password must be 8 characters long and contain a lowercase, uppercase, number and special character';
+            } else {
+                errors.password = '';
+            }
+            break;
+
+        case 'phone':
+            if (validator.isEmpty(value, { min: 1 })) {
+                errors.phone = 'Phone number is required';
+            } else if (!validator.isMobilePhone(value, 'any', { strictMode: true })) {
+                errors.phone = 'Phone number must be between 7 and 15 digits, including country code';
+            } else {
+                errors.phone = '';
+            }
+            break;
+
+        case 'birthday':
+            if (!validator.isDate(value, { format: 'DD/MM/YYYY', strictMode: true })) {
+                errors.birthday = 'Birthday must include day, month, and year';
+            } else {
+                errors.birthday = '';
+            }
+            break;
+
+        case 'gender':
+            if (!validator.isLength(formData.gender, { min: 3 })) {
+                errors.gender = 'Gender is required';
+            } else {
+                errors.gender = '';
+            }
+            break;
+
+        case 'interests':
+            if (formData.interests.length < 5) {
+                errors.interests = 'Please select at least 5 interests';
+            } else {
+                errors.interests = '';
+            }
+            break;
+
+        case 'hobbies':
+            if (formData.hobbies.length < 5) {
+                errors.hobbies = 'Please select at least 5 hobbies';
+            } else {
+                errors.hobbies = '';
+            }
+            break;
+
+        case 'photos':
+            if (value.length < 2) {
+                errors.photos = 'Please select at least 2 photos';
+            } else {
+                errors.photos = '';
+            }
+            break;
+
+        default:
+            break;
     }
 
     setFormErrors(errors);
-  };
+};
+
 
   const validateForm = useCallback(() => {
     const {
@@ -252,69 +295,56 @@ const LargeScreens = ({ setData }) => {
       <div className={classes.container}>
         <div className={classes.topHalf}>
           <div className={classes.formContent}>
-            <ValidateBox>
-              <Fields 
-                type="text" 
-                label="First name" 
+              <Fields
+                type="text"
+                label="First name"
                 name="firstname"
                 value={formData.firstname}
-                onChange={handleChange} 
+                onChange={handleChange}
               />
-            </ValidateBox>
-            
-            <ValidateBox>            
-              <Fields 
-                type="text" 
-                label="Last name" 
-                name="lastname" 
+
+              <Fields
+                type="text"
+                label="Last name"
+                name="lastname"
                 value={formData.lastname}
                 onChange={handleChange}
               />
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
-                type="text" 
-                label="Username" 
-                name="username" 
+              <Fields
+                type="text"
+                label="Username"
+                name="username"
                 value={formData.username}
                 onChange={handleChange}
               />
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
-                type="email" 
-                label="Email" 
-                name="email" 
+              <Fields
+                type="email"
+                label="Email"
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
               />
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
-                type="phone" 
-                label="Phone number" 
-                name="phone" 
+              <Fields
+                type="phone"
+                label="Phone number"
+                name="phone"
                 value={formData.phone}
                 onChange={handleChange}
               />
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
-                type="password" 
-                label="Password" 
+              <Fields
+                type="password"
+                label="Password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
               />
 
-            </ValidateBox>
-            
-            <ValidateBox>
-              <Fields 
+
+              <Fields
                   type="birthday"
                   label={'Date of Birth'}
                   name="birthday"
@@ -322,10 +352,8 @@ const LargeScreens = ({ setData }) => {
                   handleBirthdayChange={handleBirthdayChange}
               />
 
-            </ValidateBox>
 
-            <ValidateBox>            
-              <Fields 
+              <Fields
                 type="text" 
                 label="Gender" 
                 name="gender"
@@ -335,39 +363,32 @@ const LargeScreens = ({ setData }) => {
                 onShowGenderChange={handleShowGenderChange}
               />
 
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
+              <Fields
                   label={'Interests'} 
                   name={"interests"}
                   value={formData.interests}
                   onModalChange={setModalDone}
               />
 
-            </ValidateBox>
 
-            <ValidateBox>
-              <Fields 
+              <Fields
                 label={'Hobbies'}
                 name={"hobbies"}
                 value={formData.hobbies} 
                 onModalChange={setModalDone}
               />
 
-            </ValidateBox>
           </div>
 
           <div className={classes.imageContent}>
-          <ValidateBox>
-            <Fields 
+            <Fields
               type="file" 
               label="Profile Photos" 
               name="photos"
               value={formData.photos}
             />
  
-          </ValidateBox>
 
           </div>
           
@@ -379,7 +400,10 @@ const LargeScreens = ({ setData }) => {
 
         </Button>
 
-        <ToastContainer />
+        <ToastContainer toastStyle={{
+          backgroundColor: '#dc3545',
+          color: '#fff'
+        }} />
 
         
       </div>

@@ -24,7 +24,7 @@ const PassStyle = styled.div`
     outline: none;
     position: absolute;
     right: 0;
-    background-color: none;
+    background-color: transparent;
     padding-right: 0.4rem;
     &:hover {
       color: #fff;

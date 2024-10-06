@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { formOne } from '../data';
+import { fieldData } from '../data';
 import Birthday from './UI/Birthday';
 import Gender from './UI/Gender';
 import Orientation from './UI/Orientation';
@@ -8,6 +8,8 @@ import Activities from './UI/Activities';
 import Photos from './UI/Photos/Photos';
 import Input from './UI/Input';
 import {hobbies, interests } from '../../../components/UI/Form/Interests/data';
+import {toast, ToastContainer} from "react-toastify";
+import validator from "validator";
 
 
 const ProgressTracker = styled.div`
@@ -91,48 +93,168 @@ const SmallScreens = ({setData}) => {
         email: '',
         phone: '',
         password: '',
-        birthday: { day: '', month: '', year: '' },
+        birthday: '',
         gender: '',
         showGender: false,
         interests: [],
         hobbies: [],
-        photos: ''
+        photos: []
 
     });
-
     const formFields = [
-        { name: 'firstname', label: formOne.firstname.title, type: 'name', description: formOne.firstname.info },
-        { name: 'lastname', label: formOne.lastname.title, type: 'name', description: formOne.lastname.info },
-        { name: 'username', label: formOne.username.title, type: 'name', description: formOne.username.info },
-        { name: 'email', label: formOne.email.title, type: 'email', description: formOne.email.info },
-        { name: 'phone', label: formOne.phone.title, type: 'phone', description: formOne.phone.info },
-        { name: 'password', label: formOne.password.title, type: 'password', description: formOne.password.info },
-        { name: 'birthday', label: formOne.birthday.title, description: formOne.birthday.info },
-        { name: 'gender', label: formOne.gender.title, description: formOne.gender.info },
-        // { name: 'orientation', label: formOne.orientation.title, description: formOne.orientation.info },
-        { name: 'interests', label: formOne.interests.title, description: formOne.interests.info },
-        // { name: 'lookingfor', label: formOne.lookingfor.title, description: formOne.lookingfor.info },
-        { name: 'hobbies', label: formOne.hobbies.title, description: formOne.hobbies.info },
-        { name: 'photos', label: formOne.photos.title, description: formOne.photos.info },
 
+        { name: 'firstname', label: fieldData.firstname.title, type: 'name', description: fieldData.firstname.info },
+        { name: 'lastname', label: fieldData.lastname.title, type: 'name', description: fieldData.lastname.info },
+        { name: 'username', label: fieldData.username.title, type: 'name', description: fieldData.username.info },
+        { name: 'email', label: fieldData.email.title, type: 'email', description: fieldData.email.info },
+        { name: 'phone', label: fieldData.phone.title, type: 'phone', description: fieldData.phone.info },
+        { name: 'password', label: fieldData.password.title, type: 'password', description: fieldData.password.info },
+        { name: 'birthday', label: fieldData.birthday.title, description: fieldData.birthday.info },
+        { name: 'gender', label: fieldData.gender.title, description: fieldData.gender.info },
+        { name: 'interests', label: fieldData.interests.title, description: fieldData.interests.info },
+        { name: 'hobbies', label: fieldData.hobbies.title, description: fieldData.hobbies.info },
+        { name: 'photos', label: fieldData.photos.title, description: fieldData.photos.info }
     ];
+    const [formIsValid, setFormIsValid] = useState(false);
+    const [formErrors, setFormErrors] = useState({});
+    const [birthday, setBirthday] = useState({birthday:''});
+    const [currentFieldName, setCurrentFieldName] = useState(null);
+    const showToastError = (message) => {
+        toast.error(message, { position: toast.POSITION.TOP_RIGHT });
+    };
+    const validateFields = (name, value) => {
+        let errors = { ...formErrors };
+
+        switch (name) {
+            case 'firstname':
+                if (validator.isEmpty(value, { min: 1 })) {
+                    errors.firstname = 'First name is required';
+                } else if (!validator.isLength(value, { min: 3 }) || !validator.isAlpha(value)) {
+                    errors.firstname = 'First name must be at least 3 characters and contain only letters';
+                } else {
+                    errors.firstname = '';
+                }
+                break;
+
+            case 'lastname':
+                if (validator.isEmpty(value, { min: 1 })) {
+                    errors.lastname = 'Last name is required';
+                } else if (!validator.isLength(value, { min: 3 }) || !validator.isAlpha(value)) {
+                    errors.lastname = 'Last name must be at least 3 characters and contain only letters';
+                } else {
+                    errors.lastname = '';
+                }
+                break;
+
+            case 'email':
+                if (validator.isEmpty(value, { min: 1 })) {
+                    errors.email = 'Email is required';
+                } else if (!validator.isEmail(value)) {
+                    errors.email = `Invalid email format (example: 'something@gmail.com')`;
+                } else {
+                    errors.email = '';
+                }
+                break;
+
+            case 'username':
+                if (validator.isEmpty(value, { min: 1 })) {
+                    errors.username = 'User name is required';
+                } else if (!validator.isLength(value, { min: 5 })) {
+                    errors.username = 'Username must be at least 5 characters long and can only contain letters, numbers, or underscores';
+                } else {
+                    errors.username = '';
+                }
+                break;
+
+            case 'password':
+                if (!validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1 })) {
+                    errors.password = 'Password must be 8 characters long and contain a lowercase, uppercase, number and special character';
+                } else {
+                    errors.password = '';
+                }
+                break;
+
+            case 'phone':
+                if (validator.isEmpty(value, { min: 1 })) {
+                    errors.phone = 'Phone number is required';
+                } else if (!validator.isMobilePhone(value, 'any', { strictMode: true })) {
+                    errors.phone = 'Phone number must be between 7 and 15 digits, including country code';
+                } else {
+                    errors.phone = '';
+                }
+                break;
+
+            case 'birthday':
+                const [day, month, year] = formData.birthday.split('/');
+                if (!day || !month || !year || !validator.isDate(formData.birthday, { format: 'DD/MM/YYYY', strictMode: true })) {
+                    errors.birthday = 'Please enter a complete and valid birthday (DD/MM/YYYY)';
+                } else {
+                    errors.birthday = '';
+                }
+                break;
+
+            case 'gender':
+                if (!validator.isLength(formData.gender, { min: 3 })) {
+                    errors.gender = 'Gender is required';
+                } else {
+                    errors.gender = '';
+                }
+                break;
+
+            case 'interests':
+                if (formData.interests.length < 5) {
+                    errors.interests = 'Please select at least 5 interests';
+                } else {
+                    errors.interests = '';
+                }
+                break;
+
+            case 'hobbies':
+                if (formData.hobbies.length < 5) {
+                    errors.hobbies = 'Please select at least 5 hobbies';
+                } else {
+                    errors.hobbies = '';
+                }
+                break;
+
+            case 'photos':
+                if (value.length < 2) {
+                    errors.photos = 'Please select at least 2 photos';
+                } else {
+                    errors.photos = '';
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        setFormErrors(errors);
+        setCurrentFieldName(name);
+    };
+
 
     const handleChange = (e) => {
-        setFormData({
-          ...formData,
-          [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     // Handler for birthday fields
     const handleBirthdayChange = (field, value) => {
-        setFormData({
-        ...formData,
-        birthday: {
-            ...formData.birthday,
+        const updatedBirthday = {
+            ...birthday.birthday,
             [field]: value,
-        },
-        });
+        };
+
+        setBirthday({ birthday: updatedBirthday });
+
+        const { day, month, year } = updatedBirthday;
+
+        // Only format the birthday when all parts are filled (day, month, year)
+        if (day && month && year) {
+            formData.birthday = `${day}/${month}/${year}`;
+
+        }
     };
 
     // Handler for gender fields
@@ -144,17 +266,17 @@ const SmallScreens = ({setData}) => {
         setFormData({ ...formData, showGender });
     };
 
-    const handleActivitiesChange = (index, type) => {
+    const handleActivitiesChange = (item, type) => {
       if (type === 'interests') {
         setFormData((prevFormData) => {
-          const isSelected = prevFormData.interests.includes(index);
+          const isSelected = prevFormData.interests.includes(item.data);
           let updatedActivities;
     
           if (isSelected) {
-            updatedActivities = prevFormData.interests.filter((i) => i !== index);
+            updatedActivities = prevFormData.interests.filter((i) => i !== item.data);
           } 
           else if (prevFormData.interests.length < 5) {
-            updatedActivities = [...prevFormData.interests, index];
+            updatedActivities = [...prevFormData.interests, item.data];
           } 
           else {
             updatedActivities = prevFormData.interests;
@@ -166,13 +288,13 @@ const SmallScreens = ({setData}) => {
     
       if (type === 'hobbies') {
         setFormData((prevFormData) => {
-          const isSelected = prevFormData.hobbies.includes(index);
+          const isSelected = prevFormData.hobbies.includes(item.data);
           let updatedActivities;
     
           if (isSelected) {
-            updatedActivities = prevFormData.hobbies.filter((i) => i !== index);
+            updatedActivities = prevFormData.hobbies.filter((i) => i !== item.data);
           } else if (prevFormData.hobbies.length < 5) {
-            updatedActivities = [...prevFormData.hobbies, index];
+            updatedActivities = [...prevFormData.hobbies, item.data];
           } else {
             updatedActivities = prevFormData.hobbies;
           }
@@ -181,21 +303,34 @@ const SmallScreens = ({setData}) => {
         });
       }
     };
-    
-    
+
+
 
     const handleNext = () => {
-        if (!formData[currentField.name]) {
-            alert(`Please fill in the ${currentField.label}.`);
-            return;
-          }
-          
-          if (step < formFields.length - 1) {
-            setStep(step + 1);
-          } else {
-            alert('Form Submitted');
-          }
+        const currentField = formFields[step].name;
+        const currentFieldValue = formData[currentField];
+        validateFields(currentField, currentFieldValue);
     };
+
+    useEffect(() => {
+        if (currentFieldName) {
+            const currentError = formErrors[currentFieldName];
+            if(currentError !== ''){
+                toast.error(currentError)
+
+            }
+            if (!currentError) {
+                if (step < formFields.length - 1) {
+                    setStep(step + 1);
+                } else {
+                    setData(formData)
+                }
+            } else {
+                toast.error(`Please fix the errors before proceeding.`, { position: 'top-right' });
+            }
+        }
+    }, [formErrors, currentFieldName]); // Re-run whenever formErrors or currentFieldName changes
+
 
     const handlePrevious = () => {
         if (step > 0) {
@@ -226,6 +361,11 @@ const SmallScreens = ({setData}) => {
                     type={currentField.type}
                     value={formData[currentField.name]}
                     onChange={handleChange}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleNext();
+                        }
+                    }}
                     required
                     />}
 
@@ -234,7 +374,8 @@ const SmallScreens = ({setData}) => {
                     id={currentField.name}
                     name={currentField.name}
                     value={formData.birthday}  
-                    onChange={handleBirthdayChange} 
+                    handleBirthdayChange={handleBirthdayChange}
+                    onBlur={() => validateFields('birthday', formData.birthday)}
                     required
                     />}
 
@@ -247,15 +388,6 @@ const SmallScreens = ({setData}) => {
                     required
                     />}
 
-                    {currentField.name === 'orientation' && 
-                    <Orientation
-                    id={currentField.name}
-                    name={currentField.name}
-                    value={formData[currentField.name]}
-                    onChange={handleChange}
-
-                    />}
-
                     {currentField.name === 'interests' && 
                     <Activities
                     type='interests'
@@ -264,13 +396,7 @@ const SmallScreens = ({setData}) => {
                     onSelectActivity={handleActivitiesChange}
                     />}
 
-                    {/* {currentField.name === 'lookingfor' && 
-                    <LookingFor
-                    id={currentField.name}
-                    name={currentField.name}
-                    value={formData[currentField.name]}
-                    onChange={handleChange}
-                    />} */}
+
 
                     {currentField.name === 'hobbies' && 
                     <Activities
@@ -286,6 +412,7 @@ const SmallScreens = ({setData}) => {
                     id={currentField.name}
                     name={currentField.name}
                     value={formData[currentField.name]}
+                    selected={formData[currentField.name]}
                     onChange={handleChange}
                     />}
 
@@ -300,11 +427,14 @@ const SmallScreens = ({setData}) => {
             <Button
               onClick={handleNext}
               iscomplete={step === formFields.length - 1 ? 'true' : undefined} // Omit when false
-              disabled={isCurrentFieldEmpty}
             >
               {step < formFields.length - 1 ? 'Next' : 'Submit'}
             </Button>
         </Container>
+        <ToastContainer toastStyle={{
+            backgroundColor: '#dc3545',
+            color: '#fff'
+        }}/>
         
 
       
