@@ -20,7 +20,7 @@ const Container = styled.div`
   }
 `;
 
-const Birthday = ({ id, name, value, onChange }) => {
+const Birthday = ({ id, name, value, handleBirthdayChange }) => {
   return (
     <Container>
       <span>
@@ -33,7 +33,11 @@ const Birthday = ({ id, name, value, onChange }) => {
           min="1"
           max="31"
           value={value.day}
-          onChange={(e) => onChange('day', e.target.value)}
+          onChange={(e) => handleBirthdayChange('day', e.target.value)}
+          onBlur={(e) => {
+            const day = Math.max(1, Math.min(31, e.target.value)); 
+            handleBirthdayChange('day', day);
+        }}  
         />
       </span>
 
@@ -47,8 +51,11 @@ const Birthday = ({ id, name, value, onChange }) => {
           min="1"
           max="12"
           value={value.month}
-          onChange={(e) => onChange('month', e.target.value)}
-        />
+          onChange={(e) => handleBirthdayChange('month', e.target.value)}
+          onBlur={(e) => {
+            const month = Math.max(1, Math.min(12, e.target.value)); // Enforce min/max
+            handleBirthdayChange('month', month);
+          }}        />
       </span>
 
       <span>
@@ -61,8 +68,11 @@ const Birthday = ({ id, name, value, onChange }) => {
           min="1900"
           max="2024"
           value={value.year}
-          onChange={(e) => onChange('year', e.target.value)}
-        />
+          onChange={(e) => handleBirthdayChange('year', e.target.value)}
+          onBlur={(e) => {
+            const year = Math.max(1900, Math.min(2024, e.target.value)); // Enforce min/max
+            handleBirthdayChange('year', year);
+          }}          />
       </span>
     </Container>
   );

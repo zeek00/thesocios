@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classes from './Login.module.css';
-import Input from '../../../components/UI/Input/Input';
-import Button from '../../../components/UI/Button/Button';
-import { checkValidity } from '../../../shared/Method';
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
+import { checkValidity } from '../../shared/Method';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from "../../../store/actions";
-import { OverlaySpinner } from '../../../components/UI/Spinner/OverlaySpinner';
-import { NavLink, useHistory } from 'react-router-dom';
-import Header from '../../../components/Navigation/Header/Header';
+import * as actions from "../../store/actions";
+import { OverlaySpinner } from '../../components/UI/Spinner/OverlaySpinner';
+import { NavLink } from 'react-router-dom';
+import Header from '../../components/Navigation/Header/Header';
 
 const bgLeft = {
     backgroundImage: '#fff',
@@ -50,35 +50,35 @@ const Login = () => {
     });
     
     const [formIsValid, setFormIsValid] = useState(false);
-    const [errorMsg, setErrorMsg] = useState({});
+    // const [errorMsg, setErrorMsg] = useState({});
 
-    const history = useHistory();
+    // const history = useHistory();
     const dispatch = useDispatch();
 
     const loading = useSelector(state => state.auth.loading);
-    const setOTP = useSelector(state => state.auth.setOTP);
+    // const setOTP = useSelector(state => state.auth.setOTP);
     const message = useSelector(state => state.auth.message);
-    const isAuth = useSelector(state => state.auth.token !== null);
+    // const isAuth = useSelector(state => state.auth.token !== null);
 
     const onAuth = formData => dispatch(actions.auth(formData));
-    const onUnload = () => dispatch(actions.onUnload());
+    // const onUnload = () => dispatch(actions.onUnload());
 
-    useEffect(() => {
-        componentCheckAuth();
-        return () => {
-            onUnload();
-        };
-    }, [setOTP, isAuth, loading]);
+    // useEffect(() => {
+    //     componentCheckAuth();
+    //     return () => {
+    //         onUnload();
+    //     };
+    // }, [setOTP, isAuth, loading]);
 
-    const componentCheckAuth = () => {
-        if (setOTP && !loading) {
-            history.push("/verify-otp");
-        }
+    // const componentCheckAuth = () => {
+    //     if (setOTP && !loading) {
+    //         history.push("/verify-otp");
+    //     }
 
-        if (isAuth && !loading) {
-            history.push("/dashboard");
-        }
-    };
+    //     if (isAuth && !loading) {
+    //         history.push("/dashboard");
+    //     }
+    // };
 
     const inputChangedHandler = (event, inputIdentifier) => {
         const updatedLoginForm = {

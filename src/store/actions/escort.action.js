@@ -1,7 +1,7 @@
 import * as actionTypes from './actionType';
 import {SERVER_REQUEST} from '../../shared/Backend'
 import {ApiEndpoints} from '../../config/Config'
-import {GET_TOKEN, GET_USER} from '../../shared/Storage'
+// import {GET_TOKEN, GET_USER} from '../../shared/Storage'
 import { toast } from 'react-toastify';
 
 

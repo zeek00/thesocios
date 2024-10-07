@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Box from '../../../../../components/UI/Box/Box';
+import Box from '../../../../components/UI/Box/Box';
 
 const Container = styled.div`
     display: flex;
